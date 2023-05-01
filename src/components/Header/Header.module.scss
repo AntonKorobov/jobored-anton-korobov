@@ -1,0 +1,24 @@
+.header {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--header-height);
+  background-color: antiquewhite;
+}
+
+.nav {
+  position: relative;
+  margin: 0 auto;
+}
+
+.logo {
+  display: flex;
+  gap: 1rem;
+}
+
+.list {
+  display: flex;
+  gap: 3rem;
+  list-style: none;
+}
