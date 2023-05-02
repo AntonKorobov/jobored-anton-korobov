@@ -35,13 +35,13 @@ a {
   &:link {
     color: var(--main-text-color);
   }
-  &:visited {
-    color: var(--main-text-color);
-  }
   &:hover {
     color: var(--link-color);
   }
   &:active {
     color: var(--link-color);
+  }
+  &:focus-visible {
+    outline: 3px solid var(--link-color);
   }
 }

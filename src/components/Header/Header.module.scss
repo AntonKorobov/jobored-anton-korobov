@@ -21,6 +21,10 @@
   margin: 0 auto;
 }
 
+.activeLink {
+  color: var(--link-color);
+}
+
 .logo {
   display: flex;
   gap: 1.2rem;
