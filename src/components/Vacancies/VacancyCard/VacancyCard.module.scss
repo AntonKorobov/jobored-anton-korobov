@@ -1,0 +1,32 @@
+.vacancyCard {
+  display: block;
+  margin-bottom: 1rem;
+  padding: 2.4rem;
+  background-color: var(--main-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+
+  &:hover {
+    color: var(--text-basic);
+    .title {
+      color: var(--link-color);
+    }
+  }
+}
+
+.title {
+  margin-bottom: 1.2rem;
+}
+
+.info {
+  display: flex;
+  gap: 1.2rem 2rem;
+  flex-wrap: wrap;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}

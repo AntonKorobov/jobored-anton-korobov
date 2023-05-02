@@ -6,13 +6,13 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Header() {
+export function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.wrapper}>
-        <Link className={clsx(styles.logo, styles.link)} href="/">
+        <Link className={styles.logo} href="/">
           <Image className={styles.logoImg} src="/logo.svg" width={36} height={36} alt="site logo" />
-          <h1 className={clsx(styles.h1, styles.logoTitle)}>Jobored</h1>
+          <h1 className={styles.logoTitle}>Jobored</h1>
         </Link>
         <nav className={styles.nav}>
           <ul className={styles.list}>
