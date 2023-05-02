@@ -1,0 +1,41 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--main-color);
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--header-height);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.nav {
+  position: relative;
+  margin: 0 auto;
+}
+
+.activeLink {
+  color: var(--link-color);
+}
+
+.logo {
+  display: flex;
+  gap: 1.2rem;
+  font-size: 2.4rem;
+  line-height: 3.6rem;
+  font-family: 'Poppins', 'Arial', 'Tahoma', sans-serif;
+  font-weight: 600;
+}
+
+.list {
+  display: flex;
+  gap: 3rem;
+  list-style: none;
+}
