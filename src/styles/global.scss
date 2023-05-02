@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@400;600&display=swap');
+
 :root {
   --max-width: 1100px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
   --header-height: 8.4rem;
+
+  --main-color: #ffffff;
+  --main-text-color: #000000;
+  --background-color: #eaebed;
+  --link-color: #5e96fc;
 }
 
 * {
@@ -17,22 +23,23 @@ html {
 
 body {
   font-size: 1.6rem;
+  font-family: 'Inter', 'Arial', 'Tahoma', sans-serif;
+  background-color: var(--background-color);
 }
 
-.a {
-  color: black;
+a {
+  color: var(--main-text-color);
   text-decoration: none;
   &:link {
-    color: black;
+    color: var(--main-text-color);
   }
   &:visited {
-    color: black;
+    color: var(--main-text-color);
   }
   &:hover {
-    color: red;
-    text-decoration: underline;
+    color: var(--link-color);
   }
   &:active {
-    color: red;
+    color: var(--link-color);
   }
 }

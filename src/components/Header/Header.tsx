@@ -9,20 +9,22 @@ import Link from 'next/link';
 export default function Header() {
   return (
     <header className={styles.header}>
-      <Link className={styles.logo} href="/">
-        <Image src="/logo.svg" width={30} height={30} alt="site logo" />
-        <h1 className={clsx(styles.h1, styles.logoTitle)}>Jobored</h1>
-      </Link>
-      <nav className={styles.nav}>
-        <ul className={styles.list}>
-          <li className={styles.item}>
-            <Link href="/search">Поиск вакансиий</Link>
-          </li>
-          <li className={styles.item}>
-            <Link href="/favorites">Избранное</Link>
-          </li>
-        </ul>
-      </nav>
+      <div className={styles.wrapper}>
+        <Link className={clsx(styles.logo, styles.link)} href="/">
+          <Image className={styles.logoImg} src="/logo.svg" width={36} height={36} alt="site logo" />
+          <h1 className={clsx(styles.h1, styles.logoTitle)}>Jobored</h1>
+        </Link>
+        <nav className={styles.nav}>
+          <ul className={styles.list}>
+            <li className={styles.item}>
+              <Link href="/search">Поиск вакансиий</Link>
+            </li>
+            <li className={styles.item}>
+              <Link href="/favorites">Избранное</Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
   );
 }
