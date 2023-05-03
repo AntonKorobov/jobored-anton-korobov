@@ -3,11 +3,14 @@ import styles from './VacancyCard.module.scss';
 import React from 'react';
 
 import Link from 'next/link';
+import Image from 'next/image';
+import FavoriteButton from '@/components/FavoriteButton/FavoriteButton';
 
 export function VacancyCard() {
   return (
     <Link className={styles.vacancyCard} href={'/'}>
       <h3 className={styles.title}>Менеджер-дизайнер</h3>
+      <FavoriteButton isActive={false} />
       <div className={styles.info}>
         <div className={styles.salary}>
           <p>

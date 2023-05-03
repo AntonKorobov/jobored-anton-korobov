@@ -1,5 +1,4 @@
 import styles from './Header.module.scss';
-import { clsx } from 'clsx';
 
 import React from 'react';
 import { useRouter } from 'next/router';
