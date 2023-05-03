@@ -1,10 +1,10 @@
-import styles from '@/styles/pages/Search.module.scss';
+import styles from "@/styles/pages/Search.module.scss";
 
-import React from 'react';
+import React from "react";
 
-import Layout from '@/components/layout';
-import { VacanciesContainer } from '@/components/Vacancies/VacanciesContainer/VacanciesContainer';
-import { VacancyCard } from '@/components/Vacancies/VacancyCard/VacancyCard';
+import Layout from "@/components/layout";
+import { VacanciesContainer } from "@/components/Vacancies/VacanciesContainer/VacanciesContainer";
+import { VacancyCard } from "@/components/Vacancies/VacancyCard/VacancyCard";
 
 export default function Search() {
   return (
