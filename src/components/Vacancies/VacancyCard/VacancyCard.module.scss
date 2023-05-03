@@ -14,8 +14,18 @@
   }
 }
 
-.title {
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1.2rem;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem 1rem;
+  list-style: none;
 }
 
 .info {
