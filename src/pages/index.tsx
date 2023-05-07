@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <Layout>
       <section className={styles.homePage}>
-        <h1>Welcome to my site!</h1>
+        <h2 className={styles.title}>Welcome to my site!</h2>
         <SignIn />
       </section>
     </Layout>
