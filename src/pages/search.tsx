@@ -5,8 +5,17 @@ import React from "react";
 import Layout from "@/components/layout";
 import { VacanciesContainer } from "@/components/Vacancies/VacanciesContainer/VacanciesContainer";
 import { VacancyCard } from "@/components/Vacancies/VacancyCard/VacancyCard";
+import { useGetVacancies } from "@/hooks/useGetVacancies";
 
 export default function Search() {
+  const [data, error] = useGetVacancies({
+    published: 1,
+    keyword: "",
+    payment_from: 10000,
+    payment_to: 100000,
+    catalogues: 33,
+  });
+
   return (
     <Layout>
       <div className={styles.searchPage}>
