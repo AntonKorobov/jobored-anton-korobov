@@ -27,10 +27,21 @@ export default function Search() {
         </section>
         <section className={styles.section}>
           <VacanciesContainer>
-            <VacancyCard />
-            <VacancyCard />
-            <VacancyCard />
-            <VacancyCard />
+            {data
+              ? data.objects.map((item) => (
+                  <VacancyCard
+                    key={item.id}
+                    id={item.id}
+                    currency={item.currency}
+                    firm_name={item.firm_name}
+                    payment_from={item.payment_from}
+                    payment_to={item.payment_to}
+                    profession={item.profession}
+                    town={item.town}
+                    type_of_work={item.type_of_work}
+                  />
+                ))
+              : ""}
           </VacanciesContainer>
         </section>
         <section className={styles.section}>

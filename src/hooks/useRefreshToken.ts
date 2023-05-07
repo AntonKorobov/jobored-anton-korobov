@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import useSWR from "swr";
 
-import { ISignInResponse } from "@/types/apiSuperjobTypes";
+import { IError, ISignInResponse } from "@/types/apiSuperjobTypes";
 import { writeToLocalStorage } from "@/utils/writeToLocalStorage";
 import { readFromLocalStorage } from "@/utils/readFromLocalStorage";
 
@@ -24,8 +24,9 @@ export const useRefreshToken = () => {
   const url = `https://startup-summer-2023-proxy.onrender.com/2.0/oauth2/refresh_token/?refresh_token=${logInData.refresh_token}&client_id=${logInData.client_id}&client_secret=${logInData.client_secret}`;
   const refreshInterval = 60000;
 
-  const { data, error }: ISignInResponse = useSWR(
+  const { data, error } = useSWR<ISignInResponse, IError>(
     logInData.refresh_token ? [url, logInData.token] : null,
+    //@ts-ignore
     ([url, token]) => refreshToken(url, token),
     { refreshInterval: refreshInterval } //should be dynamic?
   );
@@ -51,5 +52,5 @@ export const useRefreshToken = () => {
     logInData.token,
   ]);
 
-  return [data, error];
+  return [data, error] as const;
 };
