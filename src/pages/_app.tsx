@@ -4,7 +4,7 @@ import type { AppProps } from "next/app";
 import { useRefreshToken } from "@/hooks/useRefreshToken";
 
 export default function App({ Component, pageProps }: AppProps) {
-  useRefreshToken();
+  // useRefreshToken();
 
   return <Component {...pageProps} />;
 }

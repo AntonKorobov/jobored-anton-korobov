@@ -22,7 +22,7 @@ export const useRefreshToken = () => {
   const logInData = { ...(readFromLocalStorage("logInData") as IRefreshToken) };
 
   const url = `https://startup-summer-2023-proxy.onrender.com/2.0/oauth2/refresh_token/?refresh_token=${logInData.refresh_token}&client_id=${logInData.client_id}&client_secret=${logInData.client_secret}`;
-  const refreshInterval = 60000;
+  const refreshInterval = 6 * 24 * 60 * 60 * 1000; //refresh once in 6 days!
 
   const { data, error } = useSWR<ISignInResponse, IError>(
     logInData.refresh_token ? [url, logInData.token] : null,

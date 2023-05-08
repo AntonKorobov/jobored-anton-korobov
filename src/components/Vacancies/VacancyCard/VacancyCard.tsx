@@ -18,6 +18,16 @@ export function VacancyCard({
   town,
   firm_name,
 }: IGetVacanciesResponseDataItem) {
+  function convertPaymentInfo(
+    from: number | null,
+    to: number | null,
+    currency: string
+  ) {
+    if (from && !to) return `з-п ${from} ${currency}`;
+    else if (from && to) return `з-п ${from} - ${to} ${currency}`;
+    else return `з-п не указана`;
+  }
+
   return (
     <Link className={styles.vacancyCard} href={"/"}>
       <div className={styles.header}>
@@ -28,9 +38,7 @@ export function VacancyCard({
         <ul className={styles.list}>
           <li className={styles.item}>
             <p className={styles.salary}>
-              <b>
-                з-п {payment_from}-{payment_to} {currency}
-              </b>
+              <b>{convertPaymentInfo(payment_from, payment_to, currency)}</b>
             </p>
           </li>
           <li className={styles.item}>
