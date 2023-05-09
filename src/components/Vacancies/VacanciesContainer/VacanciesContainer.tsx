@@ -23,6 +23,7 @@ export function VacanciesContainer({ data }: IVacanciesContainer) {
           profession={item.profession}
           town={item.town}
           type_of_work={item.type_of_work}
+          vacancyRichText={item.vacancyRichText}
         />
       ))}
     </div>

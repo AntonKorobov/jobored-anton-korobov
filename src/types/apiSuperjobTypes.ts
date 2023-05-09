@@ -25,7 +25,7 @@ export interface IGetVacanciesRequest {
   count: number;
 }
 
-export interface IGetVacanciesResponseDataItem {
+export interface IGetVacancyResponse {
   id: number;
   payment_from: number | null;
   payment_to: number | null;
@@ -42,13 +42,18 @@ export interface IGetVacanciesResponseDataItem {
     genitive: string;
   };
   firm_name: string;
+  vacancyRichText: string;
 }
 
 export interface IGetVacanciesResponse {
-  objects: IGetVacanciesResponseDataItem[];
+  objects: IGetVacancyResponse[];
   total: number;
   corrected_keyword: string | null;
   more: boolean;
+}
+
+export interface IGetVacancyRequest {
+  id: number;
 }
 
 export interface IError {

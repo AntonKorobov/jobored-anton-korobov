@@ -1,4 +1,4 @@
-import styles from "@/styles/pages/Search.module.scss";
+import styles from "@/styles/pages/Vacancies.module.scss";
 
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";

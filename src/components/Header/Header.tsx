@@ -1,10 +1,10 @@
-import styles from './Header.module.scss';
+import styles from "./Header.module.scss";
 
-import React from 'react';
-import { useRouter } from 'next/router';
+import React from "react";
+import { useRouter } from "next/router";
 
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
 export function Header() {
   const router = useRouter();
@@ -13,18 +13,34 @@ export function Header() {
     <header className={styles.header}>
       <div className={styles.wrapper}>
         <Link className={styles.logo} href="/">
-          <Image className={styles.logoImg} src="/logo.svg" width={36} height={36} alt="site logo" />
+          <Image
+            className={styles.logoImg}
+            src="/logo.svg"
+            width={36}
+            height={36}
+            alt="site logo"
+          />
           <h1 className={styles.logoTitle}>Jobored</h1>
         </Link>
         <nav className={styles.nav}>
           <ul className={styles.list}>
             <li className={styles.item}>
-              <Link className={router.pathname === '/search' ? styles.activeLink : ''} href="/search">
+              <Link
+                className={
+                  router.pathname === "/vacancies" ? styles.activeLink : ""
+                }
+                href="/vacancies"
+              >
                 Поиск вакансиий
               </Link>
             </li>
             <li className={styles.item}>
-              <Link className={router.pathname === '/favorites' ? styles.activeLink : ''} href="/favorites">
+              <Link
+                className={
+                  router.pathname === "/favorites" ? styles.activeLink : ""
+                }
+                href="/favorites"
+              >
                 Избранное
               </Link>
             </li>

@@ -7,7 +7,7 @@ import {
   IGetVacanciesResponse,
 } from "@/types/apiSuperjobTypes";
 import { readFromLocalStorage } from "@/utils/readFromLocalStorage";
-import { IRefreshToken } from "./useRefreshToken";
+import { IRefreshToken } from "@/hooks/useRefreshToken";
 
 const getVacancies = (apiURL: string, token: string, secretKey: string) =>
   fetch(apiURL, {

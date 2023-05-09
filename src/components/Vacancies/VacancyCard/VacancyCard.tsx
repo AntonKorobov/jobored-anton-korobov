@@ -6,7 +6,7 @@ import Image from "next/image";
 import { clsx } from "clsx";
 
 import FavoriteButton from "@/components/FavoriteButton/FavoriteButton";
-import { IGetVacanciesResponseDataItem } from "@/types/apiSuperjobTypes";
+import { IGetVacancyResponse } from "@/types/apiSuperjobTypes";
 
 export function VacancyCard({
   id,
@@ -17,7 +17,8 @@ export function VacancyCard({
   type_of_work,
   town,
   firm_name,
-}: IGetVacanciesResponseDataItem) {
+  vacancyRichText,
+}: IGetVacancyResponse) {
   function convertPaymentInfo(
     from: number | null,
     to: number | null,
@@ -29,7 +30,7 @@ export function VacancyCard({
   }
 
   return (
-    <Link className={styles.vacancyCard} href={"/"}>
+    <Link className={styles.vacancyCard} href={`/vacancies/${id}`}>
       <div className={styles.header}>
         <h3 className={styles.title}>{profession}</h3>
         <FavoriteButton isActive={false} />
