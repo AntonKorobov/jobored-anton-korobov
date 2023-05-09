@@ -21,6 +21,8 @@ export interface IGetVacanciesRequest {
   payment_from: number;
   payment_to: number;
   catalogues: number;
+  page: number;
+  count: number;
 }
 
 export interface IGetVacanciesResponseDataItem {

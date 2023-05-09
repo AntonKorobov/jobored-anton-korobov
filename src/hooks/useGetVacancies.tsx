@@ -21,10 +21,12 @@ export function useGetVacancies({
   payment_from,
   payment_to,
   catalogues,
+  page,
+  count,
 }: IGetVacanciesRequest) {
   const logInData = { ...(readFromLocalStorage("logInData") as IRefreshToken) };
 
-  const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?published=${published}&keyword=${keyword}&payment_from=${payment_from}&payment_to=${payment_to}&catalogues=${catalogues}`;
+  const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?published=${published}&keyword=${keyword}&payment_from=${payment_from}&payment_to=${payment_to}&catalogues=${catalogues}&page=${page}&count=${count}`;
 
   const { data, error } = useSWR<IGetVacanciesResponse, IError>(
     [url, logInData.token, logInData.client_secret],
