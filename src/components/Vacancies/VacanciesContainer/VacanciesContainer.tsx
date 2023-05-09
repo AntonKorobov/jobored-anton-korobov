@@ -3,23 +3,16 @@ import styles from "./VacanciesContainer.module.scss";
 import React from "react";
 import { VacancyCard } from "@/components/Vacancies/VacancyCard/VacancyCard";
 
-import {
-  IGetVacanciesResponse,
-  IGetVacanciesResponseDataItem,
-} from "@/types/apiSuperjobTypes";
-
-interface IItems {
-  currentItems: IGetVacanciesResponseDataItem[];
-}
+import { IGetVacanciesResponse } from "@/types/apiSuperjobTypes";
 
 interface IVacanciesContainer {
   data: IGetVacanciesResponse;
 }
 
-function Items({ currentItems }: IItems) {
+export function VacanciesContainer({ data }: IVacanciesContainer) {
   return (
-    <>
-      {currentItems.map((item) => (
+    <div className={styles.vacanciesContainer}>
+      {data.objects.map((item) => (
         <VacancyCard
           key={item.id}
           id={item.id}
@@ -32,14 +25,6 @@ function Items({ currentItems }: IItems) {
           type_of_work={item.type_of_work}
         />
       ))}
-    </>
-  );
-}
-
-export function VacanciesContainer({ data }: IVacanciesContainer) {
-  return (
-    <div className={styles.vacanciesContainer}>
-      <Items currentItems={data.objects} />
     </div>
   );
 }
