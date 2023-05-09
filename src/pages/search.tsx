@@ -8,7 +8,9 @@ import { VacanciesContainer } from "@/components/Vacancies/VacanciesContainer/Va
 import { useGetVacancies } from "@/hooks/useGetVacancies";
 
 export default function Search() {
+  const MAX_API_ITEMS = 500;
   const itemsPerPage = 4;
+  const maxPageNumber = MAX_API_ITEMS / itemsPerPage;
   const [currentPage, setCurrentPage] = useState(0);
 
   const [data, error] = useGetVacancies({
@@ -46,7 +48,11 @@ export default function Search() {
           nextLabel=">"
           onPageChange={handlePageClick}
           pageRangeDisplayed={3}
-          pageCount={Math.ceil((data?.total || 0) / itemsPerPage)}
+          pageCount={
+            Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
+              ? maxPageNumber
+              : Math.ceil((data?.total || 0) / itemsPerPage)
+          }
           previousLabel="<"
           renderOnZeroPageCount={undefined}
         />
