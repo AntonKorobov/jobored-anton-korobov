@@ -6,8 +6,15 @@ import ReactPaginate from "react-paginate";
 import Layout from "@/components/layout";
 import { VacanciesContainer } from "@/components/Vacancies/VacanciesContainer/VacanciesContainer";
 import { useGetVacancies } from "@/hooks/useGetVacancies";
+import { SearchBar } from "@/components/SearchBar/SearchBar";
+import { useRouter } from "next/router";
 
 export default function Search() {
+  const router = useRouter();
+  const { keyword } = router.query;
+
+  const [searchBarInput, setSearchBarInput] = useState("");
+
   const MAX_API_ITEMS = 500;
   const itemsPerPage = 4;
   const maxPageNumber = MAX_API_ITEMS / itemsPerPage;
@@ -15,7 +22,7 @@ export default function Search() {
 
   const [data, error] = useGetVacancies({
     published: 1,
-    keyword: "",
+    keyword: searchBarInput,
     payment_from: 10000,
     payment_to: 100000,
     catalogues: 33,
@@ -33,9 +40,10 @@ export default function Search() {
         <section className={styles.section}>
           <h1>Filters</h1>
         </section>
-        <section className={styles.section}>
-          <h1>Search</h1>
-        </section>
+        <SearchBar
+          searchBarInput={keyword?.toString() || ""}
+          setSearchBarInput={setSearchBarInput}
+        />
         {data && <VacanciesContainer data={data} />}
         <ReactPaginate
           containerClassName={styles.paginationContainer}
