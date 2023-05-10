@@ -8,14 +8,26 @@
 
   &:hover {
     color: var(--text-basic);
-    .title {
-      color: var(--link-color);
-    }
+    transform: scale(1.01);
   }
 }
 
-.title {
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1.2rem;
+}
+
+.title {
+  color: var(--link-color);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem 1rem;
+  list-style: none;
 }
 
 .info {

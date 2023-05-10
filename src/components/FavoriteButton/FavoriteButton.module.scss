@@ -1,0 +1,22 @@
+.favoriteButton {
+  background-color: transparent;
+  border: none;
+}
+
+.Icon {
+  &:hover {
+    fill: var(--link-color);
+
+    path {
+      stroke: var(--link-color);
+    }
+  }
+}
+
+.Active {
+  fill: var(--link-color);
+
+  path {
+    stroke: var(--link-color);
+  }
+}

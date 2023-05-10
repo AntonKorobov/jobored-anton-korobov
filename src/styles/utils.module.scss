@@ -1,1 +1,12 @@
+.submitButton {
+  padding: 0.4rem;
+  font-size: 1.4rem;
+  background-color: var(--button-color);
+  color: var(--main-color);
+  border: none;
+  border-radius: 8px;
 
+  &:hover {
+    cursor: pointer;
+  }
+}
