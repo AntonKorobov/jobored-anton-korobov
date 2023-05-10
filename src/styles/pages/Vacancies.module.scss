@@ -51,3 +51,30 @@
     cursor: pointer;
   }
 }
+
+.vacancyInfo {
+  display: block;
+  margin-bottom: 4rem;
+  padding: 2.4rem;
+  background-color: var(--main-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+
+  b {
+    display: inline-block;
+    margin-top: 2rem;
+    margin-bottom: 1.6rem;
+  }
+
+  ul {
+    margin-left: 2.4rem;
+  }
+
+  & > :first-child {
+    margin-top: 0;
+  }
+
+  & > :first-child > b {
+    margin-top: 0;
+  }
+}
