@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import useSWR from "swr";
 
-import { ISignInResponse } from "@/types/apiSuperjobTypes";
+import { IError, ISignInResponse } from "@/types/apiSuperjobTypes";
 import { writeToLocalStorage } from "@/utils/writeToLocalStorage";
 
 export interface IUseSignIn {
@@ -30,8 +30,9 @@ export const useSignIn = ({
 }: IUseSignIn) => {
   const url = `https://startup-summer-2023-proxy.onrender.com/2.0/oauth2/password/?login=${login}&password=${password}&client_id=${client_id}&client_secret=${client_secret}&hr=${hr}`;
 
-  const { data, error }: ISignInResponse = useSWR(
+  const { data, error } = useSWR<ISignInResponse, IError>(
     isSignInDataReady ? [url, token] : null,
+    //@ts-ignore
     ([url, token]) => signIn(url, token),
     {
       revalidateIfStale: false,
