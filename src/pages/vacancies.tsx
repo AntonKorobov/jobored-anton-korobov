@@ -1,6 +1,6 @@
 import styles from "@/styles/pages/Vacancies.module.scss";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 
 import Layout from "@/components/layout";
@@ -34,6 +34,10 @@ export default function Search() {
     setCurrentPage(event.selected);
   };
 
+  useEffect(() => {
+    setSearchBarInput(keyword?.toString() || "");
+  }, [keyword]);
+
   return (
     <Layout>
       <div className={styles.searchPage}>
@@ -41,7 +45,7 @@ export default function Search() {
           <h1>Filters</h1>
         </section>
         <SearchBar
-          searchBarInput={keyword?.toString() || ""}
+          searchBarInput={searchBarInput}
           setSearchBarInput={setSearchBarInput}
         />
         {data && <VacanciesContainer data={data} />}
