@@ -1,24 +1,45 @@
+"use client";
+
 import styles from "@/styles/pages/Vacancies.module.scss";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
+import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 
 import Layout from "@/components/layout";
 import { VacanciesContainer } from "@/components/Vacancies/VacanciesContainer/VacanciesContainer";
 import { useGetVacancies } from "@/hooks/useGetVacancies";
 import { SearchBar } from "@/components/SearchBar/SearchBar";
-import { useRouter } from "next/router";
 
-export default function Search() {
+interface IVacancies {
+  keyword: string;
+  page: number;
+}
+
+export const getServerSideProps: GetServerSideProps<IVacancies> = async (
+  context
+) => {
+  const keyword = context.query?.keyword?.toString() || "";
+  const page = Number(context.query?.page) || 0;
+
+  return {
+    props: {
+      keyword,
+      page,
+    },
+  };
+};
+
+export default function Vacancies({ keyword, page }: IVacancies) {
   const router = useRouter();
-  const { keyword } = router.query;
 
-  const [searchBarInput, setSearchBarInput] = useState("");
+  const [searchBarInput, setSearchBarInput] = useState(keyword);
+  const [currentPage, setCurrentPage] = useState(page);
 
   const MAX_API_ITEMS = 500;
   const itemsPerPage = 4;
   const maxPageNumber = MAX_API_ITEMS / itemsPerPage;
-  const [currentPage, setCurrentPage] = useState(0);
 
   const [data, error] = useGetVacancies({
     published: 1,
@@ -32,11 +53,20 @@ export default function Search() {
 
   const handlePageClick = (event: { selected: number }) => {
     setCurrentPage(event.selected);
+    router.replace(
+      {
+        pathname: "",
+        query: {
+          ...router.query,
+          page: event.selected + 1,
+        },
+      },
+      undefined,
+      {
+        shallow: true,
+      }
+    );
   };
-
-  useEffect(() => {
-    setSearchBarInput(keyword?.toString() || "");
-  }, [keyword]);
 
   return (
     <Layout>
@@ -65,6 +95,7 @@ export default function Search() {
               ? maxPageNumber
               : Math.ceil((data?.total || 0) / itemsPerPage)
           }
+          initialPage={currentPage}
           previousLabel="<"
           renderOnZeroPageCount={undefined}
         />

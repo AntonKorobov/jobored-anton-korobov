@@ -16,13 +16,18 @@ export function SearchBar({ searchBarInput, setSearchBarInput }: ISearch) {
     target: { name?: string; value: string };
   }) => {
     setSearchBarInput(event.target.value);
-    router.push(
+    router.replace(
       {
-        pathname: "/vacancies",
-        query: { keyword: event.target.value },
+        pathname: "",
+        query: {
+          ...router.query,
+          keyword: event.target.value,
+        },
       },
       undefined,
-      { shallow: true }
+      {
+        shallow: true,
+      }
     );
   };
 
