@@ -1,5 +1,3 @@
-"use client";
-
 import styles from "@/styles/pages/Vacancies.module.scss";
 
 import React, { useState } from "react";
@@ -11,10 +9,14 @@ import Layout from "@/components/layout";
 import { VacanciesContainer } from "@/components/Vacancies/VacanciesContainer/VacanciesContainer";
 import { useGetVacancies } from "@/hooks/useGetVacancies";
 import { SearchBar } from "@/components/SearchBar/SearchBar";
+import { Filters } from "@/components/Filters/Filters";
 
 interface IVacancies {
   keyword: string;
   page: number;
+  industry: string;
+  payment_from: number;
+  payment_to: number;
 }
 
 export const getServerSideProps: GetServerSideProps<IVacancies> = async (
@@ -22,20 +24,35 @@ export const getServerSideProps: GetServerSideProps<IVacancies> = async (
 ) => {
   const keyword = context.query?.keyword?.toString() || "";
   const page = Number(context.query?.page) || 0;
+  const industry = context.query?.industry?.toString() || "";
+  const payment_from = Number(context.query?.payment_from) || 0;
+  const payment_to = Number(context.query?.payment_to) || 0;
 
   return {
     props: {
       keyword,
       page,
+      industry,
+      payment_from,
+      payment_to,
     },
   };
 };
 
-export default function Vacancies({ keyword, page }: IVacancies) {
+export default function Vacancies({
+  keyword,
+  page,
+  industry,
+  payment_from,
+  payment_to,
+}: IVacancies) {
   const router = useRouter();
 
   const [searchBarInput, setSearchBarInput] = useState(keyword);
   const [currentPage, setCurrentPage] = useState(page);
+  const [industryFilter, setIndustryFilter] = useState(industry);
+  const [paymentFromFilter, setPaymentFromFilter] = useState(payment_from);
+  const [paymentToFilter, setPaymentToFilter] = useState(payment_to);
 
   const MAX_API_ITEMS = 500;
   const itemsPerPage = 4;
@@ -44,8 +61,8 @@ export default function Vacancies({ keyword, page }: IVacancies) {
   const [data, error] = useGetVacancies({
     published: 1,
     keyword: searchBarInput,
-    payment_from: 10000,
-    payment_to: 100000,
+    payment_from: paymentFromFilter,
+    payment_to: paymentToFilter,
     catalogues: 33,
     page: currentPage,
     count: itemsPerPage,
@@ -71,9 +88,14 @@ export default function Vacancies({ keyword, page }: IVacancies) {
   return (
     <Layout>
       <div className={styles.searchPage}>
-        <section className={styles.section}>
-          <h1>Filters</h1>
-        </section>
+        <Filters
+          industry={""}
+          payment_from={paymentFromFilter}
+          setPaymentFromFilter={setPaymentFromFilter}
+          payment_to={paymentToFilter}
+          setPaymentToFilter={setPaymentToFilter}
+          setCurrentPage={setCurrentPage}
+        />
         <SearchBar
           searchBarInput={searchBarInput}
           setSearchBarInput={setSearchBarInput}
@@ -95,7 +117,7 @@ export default function Vacancies({ keyword, page }: IVacancies) {
               ? maxPageNumber
               : Math.ceil((data?.total || 0) / itemsPerPage)
           }
-          initialPage={currentPage}
+          forcePage={currentPage}
           previousLabel="<"
           renderOnZeroPageCount={undefined}
         />
