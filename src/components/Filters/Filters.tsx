@@ -34,6 +34,7 @@ export function Filters({
     formState: { errors },
     reset,
   } = useForm<IFilters>();
+
   const router = useRouter();
 
   const INDUSTRY_INDEX = 33;
@@ -64,11 +65,16 @@ export function Filters({
   };
 
   const onReset = () => {
-    reset({
-      payment_from: 0,
-      payment_to: 0,
-      industry,
-    });
+    reset(
+      {
+        payment_from: null,
+        payment_to: null,
+        industry: null,
+      },
+      {
+        keepDefaultValues: true,
+      }
+    );
   };
 
   return (
@@ -88,28 +94,37 @@ export function Filters({
       </div>
       <ul className={styles.categories}>
         <li className={styles.item}>
-          <h4 className={styles.categoriesTitle}>Отрасль</h4>
-          <select {...register("industry")}>
+          <label className={styles.categoriesTitle}>Отрасль</label>
+          <select
+            className={styles.input}
+            placeholder="Выберете отрасль"
+            defaultValue={industry || null}
+            {...register("industry")}
+          >
             {data &&
-              data.map((item, index) => (
-                <option key={item.key} value={item.key} defaultChecked={!index}>
+              data.map((item) => (
+                <option key={item.key} value={item.key}>
                   {item.title}
                 </option>
               ))}
           </select>
         </li>
         <li className={styles.item}>
-          <h4 className={styles.categoriesTitle}>Оклад</h4>
+          <label className={styles.categoriesTitle}>Оклад</label>
           <input
-            defaultValue={payment_from}
-            {...register("payment_from", { required: true })}
+            type="number"
+            className={styles.input}
+            placeholder="От"
+            defaultValue={payment_from || null}
+            {...register("payment_from")}
           />
-          {errors.payment_from && <span>This field is required</span>}
           <input
-            defaultValue={payment_to}
-            {...register("payment_to", { required: true })}
+            type="number"
+            className={styles.input}
+            placeholder="До"
+            defaultValue={payment_to || null}
+            {...register("payment_to")}
           />
-          {errors.payment_to && <span>This field is required</span>}
         </li>
       </ul>
       <button
