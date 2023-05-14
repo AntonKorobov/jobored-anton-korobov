@@ -32,6 +32,7 @@ export function Filters({
     handleSubmit,
     watch,
     formState: { errors },
+    reset,
   } = useForm<IFilters>();
   const router = useRouter();
 
@@ -62,11 +63,19 @@ export function Filters({
     );
   };
 
+  const onReset = () => {
+    reset({
+      payment_from: 0,
+      payment_to: 0,
+      industry,
+    });
+  };
+
   return (
     <form className={styles.filters} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.header}>
         <h3 className={styles.title}>Фильтры</h3>
-        <button className={styles.resetButton}>
+        <button className={styles.resetButton} onClick={onReset}>
           <span>Сбросить все</span>
           <Image
             className={styles.crossIcon}
