@@ -1,4 +1,6 @@
 import styles from "./SearchBar.module.scss";
+import utils from "@/styles/utils.module.scss";
+import clsx from "clsx";
 
 import React from "react";
 import Image from "next/image";
@@ -32,11 +34,18 @@ export function SearchBar({ searchBarInput, setSearchBarInput }: ISearch) {
   };
 
   const searchBarOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    // event.preventDefault();
   };
 
   return (
     <form className={styles.searchBar} onSubmit={searchBarOnSubmit}>
+      <Image
+        className={styles.submitButtonImg}
+        width={16}
+        height={16}
+        src="/icons/search.svg"
+        alt="search button"
+      />
       <input
         className={styles.input}
         type="search"
@@ -45,14 +54,11 @@ export function SearchBar({ searchBarInput, setSearchBarInput }: ISearch) {
         name="keyword"
         onChange={handleChangeSearchBar}
       />
-      <button className={styles.submitButton} type="submit">
-        <Image
-          className={styles.submitButtonImg}
-          width={16}
-          height={16}
-          src="/icons/search.svg"
-          alt="search button"
-        />
+      <button
+        className={clsx(utils.submitButton, styles.submitButton)}
+        type="submit"
+      >
+        Поиск
       </button>
     </form>
   );
