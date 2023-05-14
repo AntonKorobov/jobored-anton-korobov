@@ -56,6 +56,14 @@ export interface IGetVacancyRequest {
   id: number;
 }
 
+export interface IGetCataloguesResponse {
+  title_rus: string;
+  url_rus: string;
+  title: string;
+  id_parent: number;
+  key: number;
+}
+
 export interface IError {
   code: number;
   message: string;

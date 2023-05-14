@@ -6,9 +6,11 @@ import React from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { useGetCatalogues } from "@/hooks/useGetCatalogues";
 
 interface IFilters {
-  industry: string;
+  industry: number;
+  setIndustryFilter: (value: number) => void;
   payment_from: number;
   setPaymentFromFilter: (value: number) => void;
   payment_to: number;
@@ -18,6 +20,7 @@ interface IFilters {
 
 export function Filters({
   industry,
+  setIndustryFilter,
   payment_from,
   setPaymentFromFilter,
   payment_to,
@@ -30,12 +33,16 @@ export function Filters({
     watch,
     formState: { errors },
   } = useForm<IFilters>();
-
   const router = useRouter();
+
+  const INDUSTRY_INDEX = 33;
+  const [data, error] = useGetCatalogues({ id: INDUSTRY_INDEX });
 
   const onSubmit = (data: IFilters) => {
     setPaymentFromFilter(data.payment_from);
     setPaymentToFilter(data.payment_to);
+    setCurrentPage(0);
+    setIndustryFilter(data.industry);
 
     router.replace(
       {
@@ -45,6 +52,7 @@ export function Filters({
           payment_from: data.payment_from,
           payment_to: data.payment_to,
           page: 1,
+          industry: data.industry,
         },
       },
       undefined,
@@ -52,7 +60,6 @@ export function Filters({
         shallow: true,
       }
     );
-    setCurrentPage(0);
   };
 
   return (
@@ -73,12 +80,13 @@ export function Filters({
       <ul className={styles.categories}>
         <li className={styles.item}>
           <h4 className={styles.categoriesTitle}>Отрасль</h4>
-          <select id="cars" {...register("industry")}>
-            <option value="first" defaultChecked>
-              1
-            </option>
-            <option value="second">2</option>
-            <option value="third">3</option>
+          <select {...register("industry")}>
+            {data &&
+              data.map((item, index) => (
+                <option key={item.key} value={item.key} defaultChecked={!index}>
+                  {item.title}
+                </option>
+              ))}
           </select>
         </li>
         <li className={styles.item}>

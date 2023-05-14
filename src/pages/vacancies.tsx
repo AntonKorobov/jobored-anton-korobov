@@ -14,7 +14,7 @@ import { Filters } from "@/components/Filters/Filters";
 interface IVacancies {
   keyword: string;
   page: number;
-  industry: string;
+  industry: number;
   payment_from: number;
   payment_to: number;
 }
@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps<IVacancies> = async (
 ) => {
   const keyword = context.query?.keyword?.toString() || "";
   const page = Number(context.query?.page) || 0;
-  const industry = context.query?.industry?.toString() || "";
+  const industry = Number(context.query?.industry) || 0;
   const payment_from = Number(context.query?.payment_from) || 0;
   const payment_to = Number(context.query?.payment_to) || 0;
 
@@ -63,7 +63,7 @@ export default function Vacancies({
     keyword: searchBarInput,
     payment_from: paymentFromFilter,
     payment_to: paymentToFilter,
-    catalogues: 33,
+    catalogues: industryFilter,
     page: currentPage,
     count: itemsPerPage,
   });
@@ -89,7 +89,8 @@ export default function Vacancies({
     <Layout>
       <div className={styles.searchPage}>
         <Filters
-          industry={""}
+          industry={industryFilter}
+          setIndustryFilter={setIndustryFilter}
           payment_from={paymentFromFilter}
           setPaymentFromFilter={setPaymentFromFilter}
           payment_to={paymentToFilter}
