@@ -5,7 +5,6 @@ import clsx from "clsx";
 import React from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
 import { useGetCatalogues } from "@/hooks/useGetCatalogues";
 
 interface IFilters {
@@ -27,15 +26,20 @@ export function Filters({
   setPaymentToFilter,
   setCurrentPage,
 }: IFilters) {
+
+  const defaultValues = {
+    industry: undefined,
+    payment_from: undefined,
+    payment_to: undefined,
+  };
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
     reset,
-  } = useForm<IFilters>();
-
-  const router = useRouter();
+  } = useForm<IFilters>({ defaultValues });
 
   const INDUSTRY_INDEX = 33;
   const [data, error] = useGetCatalogues({ id: INDUSTRY_INDEX });
@@ -45,36 +49,10 @@ export function Filters({
     setPaymentToFilter(data.payment_to);
     setCurrentPage(0);
     setIndustryFilter(data.industry);
-
-    router.replace(
-      {
-        pathname: "",
-        query: {
-          ...router.query,
-          payment_from: data.payment_from,
-          payment_to: data.payment_to,
-          page: 1,
-          industry: data.industry,
-        },
-      },
-      undefined,
-      {
-        shallow: true,
-      }
-    );
   };
 
   const onReset = () => {
-    reset(
-      {
-        payment_from: null,
-        payment_to: null,
-        industry: null,
-      },
-      {
-        keepDefaultValues: true,
-      }
-    );
+    reset();
   };
 
   return (
@@ -97,10 +75,9 @@ export function Filters({
           <label className={styles.categoriesTitle}>Отрасль</label>
           <select
             className={styles.input}
-            placeholder="Выберете отрасль"
-            defaultValue={industry || null}
             {...register("industry")}
           >
+            <option hidden value="">Выберете отрасль</option>
             {data &&
               data.map((item) => (
                 <option key={item.key} value={item.key}>
@@ -115,15 +92,13 @@ export function Filters({
             type="number"
             className={styles.input}
             placeholder="От"
-            defaultValue={payment_from || null}
-            {...register("payment_from")}
+            {...register("payment_from", {valueAsNumber: true})}
           />
           <input
             type="number"
             className={styles.input}
             placeholder="До"
-            defaultValue={payment_to || null}
-            {...register("payment_to")}
+            {...register("payment_to", {valueAsNumber: true})}
           />
         </li>
       </ul>
