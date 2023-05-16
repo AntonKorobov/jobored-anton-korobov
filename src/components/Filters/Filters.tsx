@@ -4,10 +4,12 @@ import clsx from "clsx";
 
 import React from "react";
 import Image from "next/image";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
+import { useForm } from "@mantine/form";
 import { useGetCatalogues } from "@/hooks/useGetCatalogues";
 import { NumberInputCustom } from "@/components/NumberInputCustom/NumberInputCustom";
 import { SelectCustom } from "../SelectCustom/SelectCustom";
+import { TextInput } from "@mantine/core";
 
 interface IFilters {
   industry: number;
@@ -28,36 +30,35 @@ export function Filters({
   setPaymentToFilter,
   setCurrentPage,
 }: IFilters) {
-  const defaultValues = {
-    industry: undefined,
-    payment_from: undefined,
-    payment_to: undefined,
-  };
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-    reset,
-  } = useForm<IFilters>({ defaultValues });
+  const formFilters = useForm({
+    initialValues: {
+      industry: undefined,
+      payment_from: undefined,
+      payment_to: undefined,
+    },
+  });
 
   const INDUSTRY_INDEX = 33;
   const [data, error] = useGetCatalogues({ id: INDUSTRY_INDEX });
 
-  const onSubmit = (data: IFilters) => {
-    setPaymentFromFilter(data.payment_from);
-    setPaymentToFilter(data.payment_to);
-    setCurrentPage(0);
-    setIndustryFilter(data.industry);
-  };
+  // const onSubmit = (data: IFilters) => {
+  //   console.log(data);
+
+  //   setPaymentFromFilter(data.payment_from);
+  //   setPaymentToFilter(data.payment_to);
+  //   setCurrentPage(0);
+  //   setIndustryFilter(data.industry);
+  // };
 
   const onReset = () => {
-    reset();
+    formFilters.reset();
   };
 
   return (
-    <form className={styles.filters} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className={styles.filters}
+      onSubmit={formFilters.onSubmit((values) => console.log(values))}
+    >
       <div className={styles.header}>
         <h3 className={styles.title}>Фильтры</h3>
         <button className={styles.resetButton} onClick={onReset}>
@@ -73,12 +74,28 @@ export function Filters({
       </div>
       <ul className={styles.categories}>
         <li className={styles.item}>
-          <SelectCustom data={data} />
+          <SelectCustom
+            data={data}
+            form={formFilters}
+            valueName="industry"
+            // {...formFilters.getInputProps("industry")}
+          />
         </li>
         <li className={styles.item}>
           <div className={styles.salaryWrapper}>
-            <NumberInputCustom placeholder="От" label="Оклад" />
-            <NumberInputCustom placeholder="До" />
+            <NumberInputCustom
+              placeholder="От"
+              label="Оклад"
+              valueName="payment_from"
+              form={formFilters}
+              // {...formFilters.getInputProps("payment_from")}
+            />
+            <NumberInputCustom
+              placeholder="До"
+              valueName="payment_to"
+              form={formFilters}
+              // {...formFilters.getInputProps("payment_to")}
+            />
           </div>
         </li>
       </ul>

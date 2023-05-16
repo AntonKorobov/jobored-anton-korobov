@@ -1,6 +1,6 @@
 import styles from "./NumberInputCustom.module.scss";
 
-import { useState, useRef } from "react";
+import { useRef } from "react";
 
 import {
   NumberInput,
@@ -9,23 +9,29 @@ import {
   NumberInputHandlers,
 } from "@mantine/core";
 import Image from "next/image";
+import { UseFormReturnType } from "@mantine/form";
 
-interface INumberInputCustom {
+interface INumberInputCustom<TFormValues> {
   placeholder: string;
   label?: string;
+  form?: UseFormReturnType<TFormValues>;
+  valueName?: string;
 }
 
-export function NumberInputCustom({ placeholder, label }: INumberInputCustom) {
-  const [value, setValue] = useState<number | "">("");
+export function NumberInputCustom<TFormValues>({
+  placeholder,
+  label,
+  form,
+  valueName,
+}: INumberInputCustom<TFormValues>) {
   const handlers = useRef<NumberInputHandlers>();
 
   return (
     <Group>
       <div className={styles.wrapper}>
         <NumberInput
+          {...form?.getInputProps(valueName || "")}
           hideControls
-          value={value}
-          onChange={(val) => setValue(val)}
           handlersRef={handlers}
           placeholder={placeholder}
           label={label || null}

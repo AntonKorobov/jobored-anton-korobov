@@ -3,14 +3,22 @@ import Image from "next/image";
 import { Select } from "@mantine/core";
 
 import { IGetCataloguesResponse } from "@/types/apiSuperjobTypes";
+import { UseFormReturnType } from "@mantine/form";
 
-interface ISelectCustom {
+interface ISelectCustom<TFormValues> {
   data: IGetCataloguesResponse[] | undefined;
+  form?: UseFormReturnType<TFormValues>;
+  valueName?: string;
 }
 
-export function SelectCustom({ data }: ISelectCustom) {
+export function SelectCustom<TFormValues>({
+  data,
+  form,
+  valueName,
+}: ISelectCustom<TFormValues>) {
   return (
     <Select
+      {...form?.getInputProps(valueName || "")}
       label="Отрасль"
       placeholder="Выберете отрасль"
       rightSection={
