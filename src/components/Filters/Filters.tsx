@@ -6,7 +6,8 @@ import React from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { useGetCatalogues } from "@/hooks/useGetCatalogues";
-import { NumberInput, Select } from "@mantine/core";
+import { NumberInputCustom } from "@/components/NumberInputCustom/NumberInputCustom";
+import { SelectCustom } from "../SelectCustom/SelectCustom";
 
 interface IFilters {
   industry: number;
@@ -72,108 +73,13 @@ export function Filters({
       </div>
       <ul className={styles.categories}>
         <li className={styles.item}>
-          <Select
-            label="Отрасль"
-            placeholder="Выберете отрасль"
-            rightSection={
-              <Image
-                width={24}
-                height={24}
-                src={"/icons/arrow_down.svg"}
-                alt="кнопка показать список отраслей"
-              />
-            }
-            styles={{
-              root: {
-                marginBottom: "2rem",
-              },
-              rightSection: { pointerEvents: "none", paddingRight: "1.2rem" },
-              input: {
-                fontSize: "1.4rem",
-                height: "4.2rem",
-                borderRadius: "8px",
-                padding: "0 1.2rem",
-              },
-              item: {
-                fontSize: "1.4rem",
-              },
-              label: {
-                fontSize: "1.6rem",
-                fontWeight: 700,
-                marginBottom: "0.8rem",
-              },
-            }}
-            searchable
-            nothingFound="Такой отрасли нет"
-            maxDropdownHeight={280}
-            data={
-              data
-                ? data.map((item) => ({
-                    value: item.key.toString(),
-                    label: item.title,
-                  }))
-                : []
-            }
-          />
-          {/* <label className={styles.categoriesTitle}>Отрасль</label>
-          <select className={styles.input} {...register("industry")}>
-            <option hidden value="">
-              Выберете отрасль
-            </option>
-            {data &&
-              data.map((item) => (
-                <option key={item.key} value={item.key}>
-                  {item.title}
-                </option>
-              ))}
-          </select> */}
+          <SelectCustom data={data} />
         </li>
         <li className={styles.item}>
-          {/* <label className={styles.categoriesTitle}>Оклад</label>
-          <input
-            type="number"
-            className={styles.input}
-            placeholder="От"
-            {...register("payment_from", { valueAsNumber: true })}
-          /> */}
-          <NumberInput
-            placeholder="От"
-            label="Оклад"
-            min={0}
-            step={1000}
-            styles={{
-              root: {
-                marginBottom: "2rem",
-              },
-              rightSection: { paddingRight: "1.2rem" },
-              control: {
-                border: "none",
-              },
-              controlUp: {
-                backgroundColor: "transparent",
-                "&:hover": {
-                  backgroundColor: "transparent",
-                },
-              },
-              input: {
-                fontSize: "1.4rem",
-                height: "4.2rem",
-                borderRadius: "8px",
-                padding: "0 1.2rem",
-              },
-              label: {
-                fontSize: "1.6rem",
-                fontWeight: 700,
-                marginBottom: "0.8rem",
-              },
-            }}
-          />
-          <input
-            type="number"
-            className={styles.input}
-            placeholder="До"
-            {...register("payment_to", { valueAsNumber: true })}
-          />
+          <div className={styles.salaryWrapper}>
+            <NumberInputCustom placeholder="От" label="Оклад" />
+            <NumberInputCustom placeholder="До" />
+          </div>
         </li>
       </ul>
       <button

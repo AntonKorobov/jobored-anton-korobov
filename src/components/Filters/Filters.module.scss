@@ -53,10 +53,12 @@
   border: 1px solid var(--border-color-second);
   border-radius: 8px;
   font-size: 1.4rem;
+}
 
-  &::placeholder {
-    color: var(--hint-text-color);
-  }
+.salaryWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
 .submitButton {
