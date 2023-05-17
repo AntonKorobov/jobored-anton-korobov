@@ -16,13 +16,14 @@ enum EnumTypeOfWork {
 }
 
 export interface IGetVacanciesRequest {
-  published: number;
-  keyword: string;
-  payment_from: number;
-  payment_to: number;
-  catalogues: number;
-  page: number;
-  count: number;
+  published?: number;
+  keyword?: string;
+  payment_from?: number;
+  payment_to?: number;
+  catalogues?: number;
+  page?: number;
+  count?: number;
+  ids?: string[];
 }
 
 export interface IGetVacancyResponse {

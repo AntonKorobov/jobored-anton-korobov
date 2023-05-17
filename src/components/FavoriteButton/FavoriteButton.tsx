@@ -4,13 +4,21 @@ import React from "react";
 import { clsx } from "clsx";
 
 interface IFavoriteButton {
-  isActive: boolean;
+  isActive?: boolean;
+  onClick: () => void;
 }
 
-export default function FavoriteButton({ isActive = false }: IFavoriteButton) {
+export default function FavoriteButton({
+  isActive = false,
+  onClick,
+}: IFavoriteButton) {
   return (
     <button
       className={clsx(styles.favoriteButton, isActive ? styles.Active : "")}
+      onClick={(event) => {
+        event.preventDefault();
+        onClick();
+      }}
     >
       <svg
         className={styles.Icon}

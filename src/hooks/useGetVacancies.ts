@@ -6,7 +6,7 @@ import {
   IGetVacanciesRequest,
   IGetVacanciesResponse,
 } from "@/types/apiSuperjobTypes";
-import { readFromLocalStorage } from "@/utils/readFromLocalStorage";
+import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
 import { IRefreshToken } from "@/hooks/useRefreshToken";
 
 const getVacancies = (apiURL: string, token: string, secretKey: string) =>
@@ -23,10 +23,11 @@ export function useGetVacancies({
   catalogues,
   page,
   count,
+  ids,
 }: IGetVacanciesRequest) {
-  const logInData = { ...(readFromLocalStorage("logInData") as IRefreshToken) };
+  const logInData = { ...(getFromLocalStorage("logInData") as IRefreshToken) };
 
-  const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?published=${published}&keyword=${keyword}&payment_from=${payment_from}&payment_to=${payment_to}&catalogues=${catalogues}&page=${page}&count=${count}`;
+  const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?published=${published}&keyword=${keyword}&payment_from=${payment_from}&payment_to=${payment_to}&catalogues=${catalogues}&page=${page}&count=${count}&id=${ids}`;
 
   const { data, error } = useSWR<IGetVacanciesResponse, IError>(
     [url, logInData.token, logInData.client_secret],

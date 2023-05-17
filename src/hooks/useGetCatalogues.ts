@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import useSWR from "swr";
 
 import { IError, IGetCataloguesResponse } from "@/types/apiSuperjobTypes";
-import { readFromLocalStorage } from "@/utils/readFromLocalStorage";
+import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
 import { IRefreshToken } from "@/hooks/useRefreshToken";
 
 const getCatalogues = (apiURL: string, token: string, secretKey: string) =>
@@ -12,7 +12,7 @@ const getCatalogues = (apiURL: string, token: string, secretKey: string) =>
   }).then((res) => res.json());
 
 export function useGetCatalogues({ id }: { id: number }) {
-  const logInData = { ...(readFromLocalStorage("logInData") as IRefreshToken) };
+  const logInData = { ...(getFromLocalStorage("logInData") as IRefreshToken) };
 
   const url = `https://startup-summer-2023-proxy.onrender.com/2.0/catalogues/parent/${id}`;
 

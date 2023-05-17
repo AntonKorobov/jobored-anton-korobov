@@ -7,6 +7,8 @@ import { clsx } from "clsx";
 
 import FavoriteButton from "@/components/FavoriteButton/FavoriteButton";
 import { IGetVacancyResponse } from "@/types/apiSuperjobTypes";
+import { setToLocalStorage } from "@/utils/setToLocalStorage";
+import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
 
 export function VacancyCard({
   id,
@@ -29,11 +31,28 @@ export function VacancyCard({
     else return `з-п не указана`;
   }
 
+  const addToFavoriteHandler = () => {
+    const favoritesVacanciesIds = getFromLocalStorage("favoritesVacanciesIds");
+    if (id in favoritesVacanciesIds) {
+      delete favoritesVacanciesIds[id];
+      setToLocalStorage(
+        "favoritesVacanciesIds",
+        JSON.stringify(favoritesVacanciesIds)
+      );
+    } else {
+      setToLocalStorage(
+        "favoritesVacanciesIds",
+        JSON.stringify({ ...favoritesVacanciesIds, [id]: "id" })
+      );
+    }
+    console.log(localStorage.favoritesVacanciesIds);
+  };
+
   return (
     <Link className={styles.vacancyCard} href={`/vacancies/${id}`}>
       <div className={styles.header}>
         <h3 className={styles.title}>{profession}</h3>
-        <FavoriteButton isActive={false} />
+        <FavoriteButton isActive={false} onClick={addToFavoriteHandler} />
       </div>
       <div className={styles.info}>
         <ul className={styles.list}>

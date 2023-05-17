@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import useSWR from "swr";
 
 import { IError, ISignInResponse } from "@/types/apiSuperjobTypes";
-import { writeToLocalStorage } from "@/utils/writeToLocalStorage";
+import { setToLocalStorage } from "@/utils/setToLocalStorage";
 
 export interface IUseSignIn {
   login: string;
@@ -44,13 +44,16 @@ export const useSignIn = ({
   useEffect(() => {
     if (data) {
       console.log(data);
-      writeToLocalStorage("logInData", {
-        access_token: data.access_token,
-        refresh_token: data.refresh_token,
-        client_id: client_id.toString(),
-        client_secret,
-        token,
-      });
+      setToLocalStorage(
+        "logInData",
+        JSON.stringify({
+          access_token: data.access_token,
+          refresh_token: data.refresh_token,
+          client_id: client_id.toString(),
+          client_secret,
+          token,
+        })
+      );
     }
   }, [client_id, client_secret, data, token]);
 
