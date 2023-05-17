@@ -16,6 +16,7 @@ interface INumberInputCustom<TFormValues> {
   label?: string;
   form?: UseFormReturnType<TFormValues>;
   valueName?: string;
+  step?: number;
 }
 
 export function NumberInputCustom<TFormValues>({
@@ -23,6 +24,7 @@ export function NumberInputCustom<TFormValues>({
   label,
   form,
   valueName,
+  step,
 }: INumberInputCustom<TFormValues>) {
   const handlers = useRef<NumberInputHandlers>();
 
@@ -36,7 +38,7 @@ export function NumberInputCustom<TFormValues>({
           placeholder={placeholder}
           label={label || null}
           min={0}
-          step={1000}
+          step={step || 1}
           styles={{
             input: {
               fontSize: "1.4rem",
@@ -61,7 +63,7 @@ export function NumberInputCustom<TFormValues>({
               width={12}
               height={12}
               src={"/icons/control_up.svg"}
-              alt="увеличить сумму"
+              alt="увеличить значение"
             />
           </ActionIcon>
           <ActionIcon
@@ -73,7 +75,7 @@ export function NumberInputCustom<TFormValues>({
               width={12}
               height={12}
               src={"/icons/control_down.svg"}
-              alt="уменьшить сумму"
+              alt="уменьшить значение"
             />
           </ActionIcon>
         </div>

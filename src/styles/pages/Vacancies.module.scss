@@ -31,6 +31,14 @@
   &:hover {
     cursor: pointer;
   }
+
+  > a:focus {
+    outline: none;
+  }
+
+  &:focus-within {
+    outline: 1px solid var(--link-color);
+  }
 }
 
 .paginationActivePageLink {
@@ -49,6 +57,14 @@
 
   &:hover {
     cursor: pointer;
+  }
+
+  > a:focus {
+    outline: none;
+  }
+
+  &:focus-within {
+    outline: 1px solid var(--link-color);
   }
 }
 

@@ -89,11 +89,8 @@ export default function Vacancies({
     <Layout>
       <div className={styles.searchPage}>
         <Filters
-          industry={industryFilter}
           setIndustryFilter={setIndustryFilter}
-          payment_from={paymentFromFilter}
           setPaymentFromFilter={setPaymentFromFilter}
-          payment_to={paymentToFilter}
           setPaymentToFilter={setPaymentToFilter}
           setCurrentPage={setCurrentPage}
         />

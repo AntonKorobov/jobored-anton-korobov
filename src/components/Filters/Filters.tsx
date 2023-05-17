@@ -4,61 +4,56 @@ import clsx from "clsx";
 
 import React from "react";
 import Image from "next/image";
-// import { useForm } from "react-hook-form";
 import { useForm } from "@mantine/form";
 import { useGetCatalogues } from "@/hooks/useGetCatalogues";
 import { NumberInputCustom } from "@/components/NumberInputCustom/NumberInputCustom";
 import { SelectCustom } from "../SelectCustom/SelectCustom";
-import { TextInput } from "@mantine/core";
 
 interface IFilters {
-  industry: number;
   setIndustryFilter: (value: number) => void;
-  payment_from: number;
   setPaymentFromFilter: (value: number) => void;
-  payment_to: number;
   setPaymentToFilter: (value: number) => void;
   setCurrentPage: (value: number) => void;
 }
 
+interface IFormData {
+  industry: number | "";
+  payment_from: number | "";
+  payment_to: number | "";
+}
+
 export function Filters({
-  industry,
   setIndustryFilter,
-  payment_from,
   setPaymentFromFilter,
-  payment_to,
   setPaymentToFilter,
   setCurrentPage,
 }: IFilters) {
-  const formFilters = useForm({
+  const formFilters = useForm<IFormData>({
     initialValues: {
-      industry: undefined,
-      payment_from: undefined,
-      payment_to: undefined,
+      industry: "",
+      payment_from: "",
+      payment_to: "",
     },
   });
 
   const INDUSTRY_INDEX = 33;
   const [data, error] = useGetCatalogues({ id: INDUSTRY_INDEX });
 
-  // const onSubmit = (data: IFilters) => {
-  //   console.log(data);
+  const onSubmit = formFilters.onSubmit((data) => {
+    console.log(data);
 
-  //   setPaymentFromFilter(data.payment_from);
-  //   setPaymentToFilter(data.payment_to);
-  //   setCurrentPage(0);
-  //   setIndustryFilter(data.industry);
-  // };
+    setPaymentFromFilter(data.payment_from ? data.payment_from : 0);
+    setPaymentToFilter(data.payment_to ? data.payment_to : 0);
+    setCurrentPage(0);
+    setIndustryFilter(data.industry ? data.industry : 0);
+  });
 
   const onReset = () => {
     formFilters.reset();
   };
 
   return (
-    <form
-      className={styles.filters}
-      onSubmit={formFilters.onSubmit((values) => console.log(values))}
-    >
+    <form className={styles.filters} onSubmit={onSubmit}>
       <div className={styles.header}>
         <h3 className={styles.title}>Фильтры</h3>
         <button className={styles.resetButton} onClick={onReset}>
@@ -78,7 +73,9 @@ export function Filters({
             data={data}
             form={formFilters}
             valueName="industry"
-            // {...formFilters.getInputProps("industry")}
+            label="Отрасль"
+            placeholder="Выберете отрасль"
+            nothingFound="Такой отрасли нет"
           />
         </li>
         <li className={styles.item}>
@@ -88,13 +85,13 @@ export function Filters({
               label="Оклад"
               valueName="payment_from"
               form={formFilters}
-              // {...formFilters.getInputProps("payment_from")}
+              step={1000}
             />
             <NumberInputCustom
               placeholder="До"
               valueName="payment_to"
               form={formFilters}
-              // {...formFilters.getInputProps("payment_to")}
+              step={1000}
             />
           </div>
         </li>

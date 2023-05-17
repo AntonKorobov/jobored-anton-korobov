@@ -45,7 +45,13 @@ a {
   &:active {
     color: var(--link-color);
   }
-  &:focus-visible {
-    outline: 3px solid var(--link-color);
+  &:focus {
+    outline: 1px solid var(--link-color);
+  }
+}
+
+button {
+  &:focus {
+    outline: 1px solid var(--main-text-color);
   }
 }

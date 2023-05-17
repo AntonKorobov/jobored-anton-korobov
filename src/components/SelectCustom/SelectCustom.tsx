@@ -9,24 +9,30 @@ interface ISelectCustom<TFormValues> {
   data: IGetCataloguesResponse[] | undefined;
   form?: UseFormReturnType<TFormValues>;
   valueName?: string;
+  label?: string;
+  placeholder: string;
+  nothingFound: string;
 }
 
 export function SelectCustom<TFormValues>({
   data,
   form,
   valueName,
+  label,
+  placeholder,
+  nothingFound,
 }: ISelectCustom<TFormValues>) {
   return (
     <Select
       {...form?.getInputProps(valueName || "")}
-      label="Отрасль"
-      placeholder="Выберете отрасль"
+      label={label || null}
+      placeholder={placeholder || ""}
       rightSection={
         <Image
           width={24}
           height={24}
           src={"/icons/arrow_down.svg"}
-          alt="показать список отраслей"
+          alt="открыть список"
         />
       }
       styles={{
@@ -50,7 +56,7 @@ export function SelectCustom<TFormValues>({
         },
       }}
       searchable
-      nothingFound="Такой отрасли нет"
+      nothingFound={nothingFound || ""}
       maxDropdownHeight={245}
       data={
         data
