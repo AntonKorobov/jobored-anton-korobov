@@ -17,10 +17,12 @@
   }
 }
 
-.Active {
-  fill: var(--link-color);
+.active {
+  svg {
+    fill: var(--link-color);
 
-  path {
-    stroke: var(--link-color);
+    path {
+      stroke: var(--link-color);
+    }
   }
 }

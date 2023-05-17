@@ -14,7 +14,7 @@ export default function FavoriteButton({
 }: IFavoriteButton) {
   return (
     <button
-      className={clsx(styles.favoriteButton, isActive ? styles.Active : "")}
+      className={clsx(styles.favoriteButton, isActive ? styles.active : "")}
       onClick={(event) => {
         event.preventDefault();
         onClick();

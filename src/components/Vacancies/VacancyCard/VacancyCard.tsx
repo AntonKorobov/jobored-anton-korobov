@@ -10,17 +10,17 @@ import { IGetVacancyResponse } from "@/types/apiSuperjobTypes";
 import { setToLocalStorage } from "@/utils/setToLocalStorage";
 import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
 
+interface IVacancyCard {
+  data: IGetVacancyResponse;
+  isFavorite: boolean;
+  setFavoritesVacanciesIds: (value: string) => void;
+}
+
 export function VacancyCard({
-  id,
-  payment_from,
-  payment_to,
-  profession,
-  currency,
-  type_of_work,
-  town,
-  firm_name,
-  vacancyRichText,
-}: IGetVacancyResponse) {
+  data,
+  isFavorite,
+  setFavoritesVacanciesIds,
+}: IVacancyCard) {
   function convertPaymentInfo(
     from: number | null,
     to: number | null,
@@ -33,8 +33,8 @@ export function VacancyCard({
 
   const addToFavoriteHandler = () => {
     const favoritesVacanciesIds = getFromLocalStorage("favoritesVacanciesIds");
-    if (id in favoritesVacanciesIds) {
-      delete favoritesVacanciesIds[id];
+    if (data.id in favoritesVacanciesIds) {
+      delete favoritesVacanciesIds[data.id];
       setToLocalStorage(
         "favoritesVacanciesIds",
         JSON.stringify(favoritesVacanciesIds)
@@ -42,27 +42,34 @@ export function VacancyCard({
     } else {
       setToLocalStorage(
         "favoritesVacanciesIds",
-        JSON.stringify({ ...favoritesVacanciesIds, [id]: "id" })
+        JSON.stringify({ ...favoritesVacanciesIds, [data.id]: "id" })
       );
     }
+    setFavoritesVacanciesIds(favoritesVacanciesIds);
     console.log(localStorage.favoritesVacanciesIds);
   };
 
   return (
-    <Link className={styles.vacancyCard} href={`/vacancies/${id}`}>
+    <Link className={styles.vacancyCard} href={`/vacancies/${data.id}`}>
       <div className={styles.header}>
-        <h3 className={styles.title}>{profession}</h3>
-        <FavoriteButton isActive={false} onClick={addToFavoriteHandler} />
+        <h3 className={styles.title}>{data.profession}</h3>
+        <FavoriteButton isActive={isFavorite} onClick={addToFavoriteHandler} />
       </div>
       <div className={styles.info}>
         <ul className={styles.list}>
           <li className={styles.item}>
             <p className={styles.salary}>
-              <b>{convertPaymentInfo(payment_from, payment_to, currency)}</b>
+              <b>
+                {convertPaymentInfo(
+                  data.payment_from,
+                  data.payment_to,
+                  data.currency
+                )}
+              </b>
             </p>
           </li>
           <li className={styles.item}>
-            <p className={styles.type}> • {type_of_work.title}</p>
+            <p className={styles.type}> • {data.type_of_work.title}</p>
           </li>
           <li className={clsx(styles.item, styles.location)}>
             <Image
@@ -71,7 +78,7 @@ export function VacancyCard({
               height={18}
               alt={""}
             />
-            <p className={styles.locationName}>{town.title}</p>
+            <p className={styles.locationName}>{data.town.title}</p>
           </li>
         </ul>
       </div>

@@ -10,6 +10,7 @@ import { VacanciesContainer } from "@/components/Vacancies/VacanciesContainer/Va
 import { useGetVacancies } from "@/hooks/useGetVacancies";
 import { SearchBar } from "@/components/SearchBar/SearchBar";
 import { Filters } from "@/components/Filters/Filters";
+import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
 
 interface IVacancies {
   keyword: string;
@@ -53,6 +54,10 @@ export default function Vacancies({
   const [industryFilter, setIndustryFilter] = useState(industry);
   const [paymentFromFilter, setPaymentFromFilter] = useState(payment_from);
   const [paymentToFilter, setPaymentToFilter] = useState(payment_to);
+
+  const [favoritesVacanciesIds, setFavoritesVacanciesIds] = useState(
+    getFromLocalStorage("favoritesVacanciesIds")
+  );
 
   const MAX_API_ITEMS = 500;
   const itemsPerPage = 4;
@@ -98,7 +103,13 @@ export default function Vacancies({
           searchBarInput={searchBarInput}
           setSearchBarInput={setSearchBarInput}
         />
-        {data && <VacanciesContainer data={data} />}
+        {data && (
+          <VacanciesContainer
+            favoritesVacanciesIds={favoritesVacanciesIds}
+            setFavoritesVacanciesIds={setFavoritesVacanciesIds}
+            data={data}
+          />
+        )}
         <ReactPaginate
           containerClassName={styles.paginationContainer}
           pageClassName={styles.paginationItem}
