@@ -40,9 +40,10 @@ export function VacancyCard({
         JSON.stringify(favoritesVacanciesIds)
       );
     } else {
+      favoritesVacanciesIds[data.id] = "id";
       setToLocalStorage(
         "favoritesVacanciesIds",
-        JSON.stringify({ ...favoritesVacanciesIds, [data.id]: "id" })
+        JSON.stringify({ ...favoritesVacanciesIds })
       );
     }
     setFavoritesVacanciesIds(favoritesVacanciesIds);
