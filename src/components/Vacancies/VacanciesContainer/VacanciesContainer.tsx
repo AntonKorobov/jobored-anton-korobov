@@ -7,7 +7,7 @@ import { IGetVacanciesResponse } from "@/types/apiSuperjobTypes";
 
 interface IVacanciesContainer {
   data: IGetVacanciesResponse;
-  favoritesVacanciesIds: { value: string };
+  favoritesVacanciesIds: number[];
   setFavoritesVacanciesIds: (value: string) => void;
 }
 
@@ -32,7 +32,7 @@ export function VacanciesContainer({
             type_of_work: item.type_of_work,
             vacancyRichText: item.vacancyRichText,
           }}
-          isFavorite={item.id in favoritesVacanciesIds}
+          isFavorite={favoritesVacanciesIds.indexOf(item.id) !== -1}
           setFavoritesVacanciesIds={setFavoritesVacanciesIds}
         />
       ))}

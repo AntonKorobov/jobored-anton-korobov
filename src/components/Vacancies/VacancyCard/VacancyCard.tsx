@@ -33,19 +33,16 @@ export function VacancyCard({
 
   const addToFavoriteHandler = () => {
     const favoritesVacanciesIds = getFromLocalStorage("favoritesVacanciesIds");
-    if (data.id in favoritesVacanciesIds) {
-      delete favoritesVacanciesIds[data.id];
-      setToLocalStorage(
-        "favoritesVacanciesIds",
-        JSON.stringify(favoritesVacanciesIds)
-      );
+    const indexOfId = favoritesVacanciesIds.indexOf(data.id);
+    if (indexOfId === -1) {
+      favoritesVacanciesIds.push(data.id);
     } else {
-      favoritesVacanciesIds[data.id] = "id";
-      setToLocalStorage(
-        "favoritesVacanciesIds",
-        JSON.stringify({ ...favoritesVacanciesIds })
-      );
+      delete favoritesVacanciesIds[indexOfId];
     }
+    setToLocalStorage(
+      "favoritesVacanciesIds",
+      JSON.stringify(favoritesVacanciesIds.flat())
+    );
     setFavoritesVacanciesIds(favoritesVacanciesIds);
     console.log(localStorage.favoritesVacanciesIds);
   };
