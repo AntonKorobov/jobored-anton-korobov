@@ -99,7 +99,11 @@ export default function Vacancies({
           searchBarInput={searchBarInput}
           setSearchBarInput={setSearchBarInput}
         />
-        {isLoading && <Spinner />}
+        {isLoading && (
+          <div className={styles.spinnerWrapper}>
+            <Spinner />
+          </div>
+        )}
         {data && <VacanciesContainer data={data} />}
         <Pagination
           onPageChange={handlePageClick}

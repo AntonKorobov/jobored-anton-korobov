@@ -25,7 +25,7 @@ export function useGetVacancies({
   count,
   ids,
 }: IGetVacanciesRequest) {
-  const logInData = { ...(getFromLocalStorage("logInData") as IRefreshToken) };
+  const logInData = { ...(getFromLocalStorage("SignInData") as IRefreshToken) };
 
   const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?published=${
     published || ""

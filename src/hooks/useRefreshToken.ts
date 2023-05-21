@@ -19,7 +19,7 @@ const refreshToken = (apiURL: string, token: string) =>
   );
 
 export const useRefreshToken = () => {
-  const logInData = { ...(getFromLocalStorage("logInData") as IRefreshToken) };
+  const logInData = { ...(getFromLocalStorage("SignInData") as IRefreshToken) };
 
   const url = `https://startup-summer-2023-proxy.onrender.com/2.0/oauth2/refresh_token/?refresh_token=${logInData.refresh_token}&client_id=${logInData.client_id}&client_secret=${logInData.client_secret}`;
   const refreshInterval = 6 * 24 * 60 * 60 * 1000; //refresh once in 6 days!

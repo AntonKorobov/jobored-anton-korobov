@@ -16,7 +16,7 @@ const getVacancy = (apiURL: string, token: string, secretKey: string) =>
   }).then((res) => res.json());
 
 export function useGetVacancy({ id }: IGetVacancyRequest) {
-  const logInData = { ...(getFromLocalStorage("logInData") as IRefreshToken) };
+  const logInData = { ...(getFromLocalStorage("SignInData") as IRefreshToken) };
 
   const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/${id}`;
 

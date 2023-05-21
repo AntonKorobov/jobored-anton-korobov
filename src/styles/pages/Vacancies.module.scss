@@ -1,3 +1,8 @@
+.searchPage,
+.vacancyPage {
+  margin-top: 1.6rem;
+}
+
 .section {
   margin-bottom: 1rem;
 }
@@ -27,4 +32,12 @@
   & > :first-child > b {
     margin-top: 0;
   }
+}
+
+.spinnerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10rem;
+  width: 100%;
 }

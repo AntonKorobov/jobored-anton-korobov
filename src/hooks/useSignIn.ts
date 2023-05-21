@@ -30,7 +30,7 @@ export const useSignIn = ({
 }: IUseSignIn) => {
   const url = `https://startup-summer-2023-proxy.onrender.com/2.0/oauth2/password/?login=${login}&password=${password}&client_id=${client_id}&client_secret=${client_secret}&hr=${hr}`;
 
-  const { data, error } = useSWR<ISignInResponse, IError>(
+  const { data, error, isLoading } = useSWR<ISignInResponse, IError>(
     isSignInDataReady ? [url, token] : null,
     //@ts-ignore
     ([url, token]) => signIn(url, token),
@@ -45,7 +45,7 @@ export const useSignIn = ({
     if (data) {
       console.log(data);
       setToLocalStorage(
-        "logInData",
+        "SignInData",
         JSON.stringify({
           access_token: data.access_token,
           refresh_token: data.refresh_token,
@@ -57,5 +57,5 @@ export const useSignIn = ({
     }
   }, [client_id, client_secret, data, token]);
 
-  return [data, error];
+  return [data, error, isLoading] as const;
 };
