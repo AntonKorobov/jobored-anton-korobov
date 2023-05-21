@@ -17,15 +17,17 @@ export default function Vacancy() {
         <div className={styles.vacancyPage}>
           <VacancyCard
             key={data.id}
-            id={data.id}
-            currency={data.currency}
-            firm_name={data.firm_name}
-            payment_from={data.payment_from}
-            payment_to={data.payment_to}
-            profession={data.profession}
-            town={data.town}
-            type_of_work={data.type_of_work}
-            vacancyRichText={data.vacancyRichText}
+            data={{
+              id: data.id,
+              currency: data.currency,
+              firm_name: data.firm_name,
+              payment_from: data.payment_from,
+              payment_to: data.payment_to,
+              profession: data.profession,
+              town: data.town,
+              type_of_work: data.type_of_work,
+              vacancyRichText: data.vacancyRichText,
+            }}
           />
           <div
             className={styles.vacancyInfo}
