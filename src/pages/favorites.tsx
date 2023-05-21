@@ -18,7 +18,7 @@ interface IVacancies {
 export const getServerSideProps: GetServerSideProps<IVacancies> = async (
   context
 ) => {
-  const page = Number(context.query?.page) || 0;
+  const page = Number(context.query?.page) - 1 || 0;
 
   return {
     props: {
