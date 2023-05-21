@@ -1,6 +1,6 @@
 import styles from "@/styles/pages/Vacancies.module.scss";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
@@ -10,7 +10,6 @@ import { VacanciesContainer } from "@/components/Vacancies/VacanciesContainer/Va
 import { useGetVacancies } from "@/hooks/useGetVacancies";
 import { SearchBar } from "@/components/SearchBar/SearchBar";
 import { Filters } from "@/components/Filters/Filters";
-import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
 
 interface IVacancies {
   keyword: string;

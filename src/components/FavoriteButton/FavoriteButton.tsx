@@ -1,6 +1,5 @@
 import styles from "./FavoriteButton.module.scss";
 
-import React from "react";
 import { clsx } from "clsx";
 
 interface IFavoriteButton {

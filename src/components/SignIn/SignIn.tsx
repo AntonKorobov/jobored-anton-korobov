@@ -2,7 +2,7 @@ import utilsStyles from "@/styles/utils.module.scss";
 import styles from "./SignIn.module.scss";
 import { clsx } from "clsx";
 
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { useSignIn } from "@/hooks/useSignIn";
 

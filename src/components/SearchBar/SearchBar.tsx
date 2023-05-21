@@ -2,7 +2,6 @@ import styles from "./SearchBar.module.scss";
 import utils from "@/styles/utils.module.scss";
 import clsx from "clsx";
 
-import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
