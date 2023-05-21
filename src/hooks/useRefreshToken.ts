@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import useSWR from "swr";
 
 import { IError, ISignInResponse } from "@/types/apiSuperjobTypes";
-import { writeToLocalStorage } from "@/utils/writeToLocalStorage";
-import { readFromLocalStorage } from "@/utils/readFromLocalStorage";
+import { setToLocalStorage } from "@/utils/setToLocalStorage";
+import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
 
 export interface IRefreshToken {
   access_token: string;
@@ -19,7 +19,7 @@ const refreshToken = (apiURL: string, token: string) =>
   );
 
 export const useRefreshToken = () => {
-  const logInData = { ...(readFromLocalStorage("logInData") as IRefreshToken) };
+  const logInData = { ...(getFromLocalStorage("logInData") as IRefreshToken) };
 
   const url = `https://startup-summer-2023-proxy.onrender.com/2.0/oauth2/refresh_token/?refresh_token=${logInData.refresh_token}&client_id=${logInData.client_id}&client_secret=${logInData.client_secret}`;
   const refreshInterval = 6 * 24 * 60 * 60 * 1000; //refresh once in 6 days!
@@ -34,13 +34,16 @@ export const useRefreshToken = () => {
   useEffect(() => {
     if (data) {
       console.log("token has been updated: ", data);
-      writeToLocalStorage("logInData", {
-        access_token: data.access_token,
-        refresh_token: data.refresh_token,
-        client_id: logInData.client_id.toString(),
-        client_secret: logInData.client_secret,
-        token: logInData.token,
-      });
+      setToLocalStorage(
+        "logInData",
+        JSON.stringify({
+          access_token: data.access_token,
+          refresh_token: data.refresh_token,
+          client_id: logInData.client_id.toString(),
+          client_secret: logInData.client_secret,
+          token: logInData.token,
+        })
+      );
     } else if (error) {
       console.log(error.message);
     }

@@ -1,6 +1,5 @@
 import styles from "./Header.module.scss";
 
-import React from "react";
 import { useRouter } from "next/router";
 
 import Image from "next/image";
@@ -16,8 +15,8 @@ export function Header() {
           <Image
             className={styles.logoImg}
             src="/logo.svg"
-            width={36}
-            height={36}
+            width={30}
+            height={30}
             alt="site logo"
           />
           <h1 className={styles.logoTitle}>Jobored</h1>

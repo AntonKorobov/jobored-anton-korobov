@@ -1,14 +1,13 @@
 .vacancyCard {
   display: block;
-  margin-bottom: 1rem;
-  padding: 2.4rem;
+  margin-bottom: 1.6rem;
+  padding: 1.2rem;
   background-color: var(--main-color);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
 
   &:hover {
     color: var(--text-basic);
-    transform: scale(1.01);
   }
 }
 
@@ -17,6 +16,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.2rem;
+  gap: 1rem;
 }
 
 .title {

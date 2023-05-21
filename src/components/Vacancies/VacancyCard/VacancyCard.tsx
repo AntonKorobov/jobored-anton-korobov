@@ -1,24 +1,21 @@
 import styles from "./VacancyCard.module.scss";
 
-import React from "react";
+import { useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { clsx } from "clsx";
 
 import FavoriteButton from "@/components/FavoriteButton/FavoriteButton";
 import { IGetVacancyResponse } from "@/types/apiSuperjobTypes";
+import { setToLocalStorage } from "@/utils/setToLocalStorage";
+import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
+import { FavoritesVacanciesContext } from "@/store/Context";
 
-export function VacancyCard({
-  id,
-  payment_from,
-  payment_to,
-  profession,
-  currency,
-  type_of_work,
-  town,
-  firm_name,
-  vacancyRichText,
-}: IGetVacancyResponse) {
+interface IVacancyCard {
+  data: IGetVacancyResponse;
+}
+
+export function VacancyCard({ data }: IVacancyCard) {
   function convertPaymentInfo(
     from: number | null,
     to: number | null,
@@ -29,21 +26,50 @@ export function VacancyCard({
     else return `з-п не указана`;
   }
 
+  const { favoritesVacanciesIds, setFavoritesVacanciesIds } = useContext(
+    FavoritesVacanciesContext
+  );
+
+  const addToFavoriteHandler = () => {
+    const favoritesVacanciesIds = getFromLocalStorage("favoritesVacanciesIds");
+    const indexOfId = favoritesVacanciesIds.indexOf(data.id);
+    if (indexOfId === -1) {
+      favoritesVacanciesIds.push(data.id);
+    } else {
+      delete favoritesVacanciesIds[indexOfId];
+    }
+    setToLocalStorage(
+      "favoritesVacanciesIds",
+      JSON.stringify(favoritesVacanciesIds.flat())
+    );
+    setFavoritesVacanciesIds(favoritesVacanciesIds);
+    console.log(localStorage.favoritesVacanciesIds);
+  };
+
   return (
-    <Link className={styles.vacancyCard} href={`/vacancies/${id}`}>
+    <Link className={styles.vacancyCard} href={`/vacancies/${data.id}`}>
       <div className={styles.header}>
-        <h3 className={styles.title}>{profession}</h3>
-        <FavoriteButton isActive={false} />
+        <h3 className={styles.title}>{data.profession}</h3>
+        <FavoriteButton
+          isActive={favoritesVacanciesIds.indexOf(data.id) !== -1}
+          onClick={addToFavoriteHandler}
+        />
       </div>
       <div className={styles.info}>
         <ul className={styles.list}>
           <li className={styles.item}>
             <p className={styles.salary}>
-              <b>{convertPaymentInfo(payment_from, payment_to, currency)}</b>
+              <b>
+                {convertPaymentInfo(
+                  data.payment_from,
+                  data.payment_to,
+                  data.currency
+                )}
+              </b>
             </p>
           </li>
           <li className={styles.item}>
-            <p className={styles.type}> • {type_of_work.title}</p>
+            <p className={styles.type}> • {data.type_of_work.title}</p>
           </li>
           <li className={clsx(styles.item, styles.location)}>
             <Image
@@ -52,7 +78,7 @@ export function VacancyCard({
               height={18}
               alt={""}
             />
-            <p className={styles.locationName}>{town.title}</p>
+            <p className={styles.locationName}>{data.town.title}</p>
           </li>
         </ul>
       </div>

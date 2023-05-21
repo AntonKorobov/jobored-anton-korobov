@@ -1,22 +1,26 @@
 .favoriteButton {
   background-color: transparent;
   border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .Icon {
   &:hover {
-    fill: var(--link-color);
-
     path {
       stroke: var(--link-color);
     }
   }
 }
 
-.Active {
-  fill: var(--link-color);
+.active {
+  svg {
+    fill: var(--link-color);
 
-  path {
-    stroke: var(--link-color);
+    path {
+      stroke: var(--link-color);
+    }
   }
 }

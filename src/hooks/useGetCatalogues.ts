@@ -1,29 +1,25 @@
 import { useEffect } from "react";
 import useSWR from "swr";
 
-import {
-  IError,
-  IGetVacancyRequest,
-  IGetVacancyResponse,
-} from "@/types/apiSuperjobTypes";
+import { IError, IGetCataloguesResponse } from "@/types/apiSuperjobTypes";
 import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
 import { IRefreshToken } from "@/hooks/useRefreshToken";
 
-const getVacancy = (apiURL: string, token: string, secretKey: string) =>
+const getCatalogues = (apiURL: string, token: string, secretKey: string) =>
   fetch(apiURL, {
     method: "GET",
     headers: { "x-secret-key": token, "X-Api-App-Id": secretKey },
   }).then((res) => res.json());
 
-export function useGetVacancy({ id }: IGetVacancyRequest) {
+export function useGetCatalogues({ id }: { id: number }) {
   const logInData = { ...(getFromLocalStorage("logInData") as IRefreshToken) };
 
-  const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/${id}`;
+  const url = `https://startup-summer-2023-proxy.onrender.com/2.0/catalogues/parent/${id}`;
 
-  const { data, error } = useSWR<IGetVacancyResponse, IError>(
+  const { data, error } = useSWR<IGetCataloguesResponse[], IError>(
     [url, logInData.token, logInData.client_secret],
     //@ts-ignore
-    ([url, token, secretKey]) => getVacancy(url, token, secretKey)
+    ([url, token, secretKey]) => getCatalogues(url, token, secretKey)
   );
 
   useEffect(() => {

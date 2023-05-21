@@ -2,52 +2,29 @@
   margin-bottom: 1rem;
 }
 
-.paginationContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin: 2rem 0;
-
-  li {
-    list-style: none;
-  }
-}
-
-.paginationItem {
+.vacancyInfo {
+  display: block;
+  margin-bottom: 4rem;
+  padding: 2.4rem;
   background-color: var(--main-color);
   border: 1px solid var(--border-color);
-  border-radius: 4px;
-}
+  border-radius: var(--border-radius);
 
-.paginationPageLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 3.2rem;
-  max-height: 3.2rem;
-  padding: 0.8rem;
-
-  &:hover {
-    cursor: pointer;
+  b {
+    display: inline-block;
+    margin-top: 2rem;
+    margin-bottom: 1.6rem;
   }
-}
 
-.paginationActivePageLink {
-  background-color: var(--button-color);
-  border-radius: 4px;
-}
+  ul {
+    margin-left: 2.4rem;
+  }
 
-.paginationButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 3.2rem;
-  height: 3.2rem;
-  background-color: var(--main-color);
-  border-radius: 4px;
+  & > :first-child {
+    margin-top: 0;
+  }
 
-  &:hover {
-    cursor: pointer;
+  & > :first-child > b {
+    margin-top: 0;
   }
 }
