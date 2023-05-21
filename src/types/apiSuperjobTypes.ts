@@ -23,7 +23,7 @@ export interface IGetVacanciesRequest {
   catalogues?: number;
   page?: number;
   count?: number;
-  ids?: string[];
+  ids?: number[];
 }
 
 export interface IGetVacancyResponse {

@@ -9,8 +9,6 @@
 
 .Icon {
   &:hover {
-    fill: var(--link-color);
-
     path {
       stroke: var(--link-color);
     }

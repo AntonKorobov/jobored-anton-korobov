@@ -27,7 +27,15 @@ export function useGetVacancies({
 }: IGetVacanciesRequest) {
   const logInData = { ...(getFromLocalStorage("logInData") as IRefreshToken) };
 
-  const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?published=${published}&keyword=${keyword}&payment_from=${payment_from}&payment_to=${payment_to}&catalogues=${catalogues}&page=${page}&count=${count}&id=${ids}`;
+  const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?published=${
+    published || ""
+  }${keyword ? "&keyword=" + keyword : ""}${
+    payment_from ? "&payment_from=" + payment_from : ""
+  }${payment_to ? "&payment_to=" + payment_to : ""}${
+    catalogues ? "&catalogues=" + catalogues : ""
+  }&page=${page || 0}${count ? "&count=" + count : ""}${
+    ids ? "&ids[]=" + ids.join("&ids[]=") : ""
+  }`;
 
   const { data, error } = useSWR<IGetVacanciesResponse, IError>(
     [url, logInData.token, logInData.client_secret],
