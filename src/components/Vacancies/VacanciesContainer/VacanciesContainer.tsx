@@ -1,21 +1,14 @@
 import styles from "./VacanciesContainer.module.scss";
 
-import React from "react";
 import { VacancyCard } from "@/components/Vacancies/VacancyCard/VacancyCard";
 
 import { IGetVacanciesResponse } from "@/types/apiSuperjobTypes";
 
 interface IVacanciesContainer {
   data: IGetVacanciesResponse;
-  favoritesVacanciesIds: number[];
-  setFavoritesVacanciesIds: (value: string) => void;
 }
 
-export function VacanciesContainer({
-  data,
-  favoritesVacanciesIds,
-  setFavoritesVacanciesIds,
-}: IVacanciesContainer) {
+export function VacanciesContainer({ data }: IVacanciesContainer) {
   return (
     <div className={styles.vacanciesContainer}>
       {data.objects.map((item) => (
@@ -32,8 +25,6 @@ export function VacanciesContainer({
             type_of_work: item.type_of_work,
             vacancyRichText: item.vacancyRichText,
           }}
-          isFavorite={favoritesVacanciesIds.indexOf(item.id) !== -1}
-          setFavoritesVacanciesIds={setFavoritesVacanciesIds}
         />
       ))}
     </div>

@@ -55,10 +55,6 @@ export default function Vacancies({
   const [paymentFromFilter, setPaymentFromFilter] = useState(payment_from);
   const [paymentToFilter, setPaymentToFilter] = useState(payment_to);
 
-  const [favoritesVacanciesIds, setFavoritesVacanciesIds] = useState(
-    getFromLocalStorage("favoritesVacanciesIds")
-  );
-
   const MAX_API_ITEMS = 500;
   const itemsPerPage = 4;
   const maxPageNumber = MAX_API_ITEMS / itemsPerPage;
@@ -103,13 +99,7 @@ export default function Vacancies({
           searchBarInput={searchBarInput}
           setSearchBarInput={setSearchBarInput}
         />
-        {data && (
-          <VacanciesContainer
-            favoritesVacanciesIds={favoritesVacanciesIds}
-            setFavoritesVacanciesIds={setFavoritesVacanciesIds}
-            data={data}
-          />
-        )}
+        {data && <VacanciesContainer data={data} />}
         <ReactPaginate
           containerClassName={styles.paginationContainer}
           pageClassName={styles.paginationItem}
