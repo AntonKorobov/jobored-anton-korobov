@@ -4,11 +4,25 @@ import { useEffect, useState } from "react";
 import Layout from "@/components/layout";
 import { SignIn } from "@/components/SignIn/SignIn";
 import { isUserSignedIn } from "@/utils/isUserSignedIn";
-import { ISignInResponse } from "@/types/apiSuperjobTypes";
+import { ISignInData, ISignInResponse } from "@/types/apiSuperjobTypes";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { setToLocalStorage } from "@/utils/setToLocalStorage";
+import { ssrAuth } from "@/utils/ssrAuth";
 
-export default function Home() {
+export const getServerSideProps: GetServerSideProps<{
+  response: ISignInData;
+}> = async () => {
+  const response = await ssrAuth();
+  return { props: { response } };
+};
+
+export default function Home({
+  response,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  setToLocalStorage("SignInData", JSON.stringify(response));
+
   const [signInData, setSignInData] = useState<ISignInResponse>();
-  const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+  const [isSignedIn, setIsSignedIn] = useState<boolean>(true);
 
   useEffect(() => {
     setIsSignedIn(isUserSignedIn());
