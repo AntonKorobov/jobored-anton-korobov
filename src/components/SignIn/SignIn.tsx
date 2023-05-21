@@ -5,14 +5,9 @@ import { clsx } from "clsx";
 import { useEffect, useState } from "react";
 
 import { useSignIn } from "@/hooks/useSignIn";
-import { ISignInResponse } from "@/types/apiSuperjobTypes";
 import { Spinner } from "@/components/Spinner/Spinner";
 
-interface ISignIn {
-  setSignInData: (data: ISignInResponse) => void;
-}
-
-export function SignIn({ setSignInData }: ISignIn) {
+export function SignIn() {
   const login = "sergei.stralenia@gmail.com";
   const password = "paralect123";
   const client_id = 2356;
@@ -32,12 +27,6 @@ export function SignIn({ setSignInData }: ISignIn) {
     token,
     isSignInDataReady,
   });
-
-  useEffect(() => {
-    if (data) {
-      setSignInData(data);
-    }
-  }, [data]);
 
   return (
     <>

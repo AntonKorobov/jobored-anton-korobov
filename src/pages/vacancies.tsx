@@ -1,7 +1,7 @@
 import styles from "@/styles/pages/Vacancies.module.scss";
 
-import { useState } from "react";
-import { GetServerSideProps } from "next";
+import { useEffect, useState } from "react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 
 import Layout from "@/components/layout";
@@ -11,6 +11,10 @@ import { SearchBar } from "@/components/SearchBar/SearchBar";
 import { Filters } from "@/components/Filters/Filters";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { Spinner } from "@/components/Spinner/Spinner";
+import { refreshToken } from "@/utils/refreshToken";
+import { ISignInData } from "@/types/apiSuperjobTypes";
+import { getEnvVariables } from "@/utils/getEnvVeriables";
+import { setToLocalStorage } from "@/utils/setToLocalStorage";
 
 interface IVacancies {
   keyword: string;
@@ -20,40 +24,45 @@ interface IVacancies {
   payment_to: number;
 }
 
-export const getServerSideProps: GetServerSideProps<IVacancies> = async (
-  context
-) => {
+export const getServerSideProps: GetServerSideProps<{
+  envVariables: ISignInData;
+  urlParams: IVacancies;
+}> = async (context) => {
+  const envVariables = getEnvVariables();
+
   const keyword = context.query?.keyword?.toString() || "";
   const page = Number(context.query?.page) - 1 || 0;
   const industry = Number(context.query?.industry) || 0;
   const payment_from = Number(context.query?.payment_from) || 0;
   const payment_to = Number(context.query?.payment_to) || 0;
-
   return {
     props: {
-      keyword,
-      page,
-      industry,
-      payment_from,
-      payment_to,
+      envVariables,
+      urlParams: { keyword, page, industry, payment_from, payment_to },
     },
   };
 };
 
 export default function Vacancies({
-  keyword,
-  page,
-  industry,
-  payment_from,
-  payment_to,
-}: IVacancies) {
+  envVariables,
+  urlParams,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  useEffect(() => {
+    setToLocalStorage("SignInData", JSON.stringify(envVariables));
+    (async () => {
+      refreshToken();
+    })();
+  }, [envVariables]);
+
   const router = useRouter();
 
-  const [searchBarInput, setSearchBarInput] = useState(keyword);
-  const [currentPage, setCurrentPage] = useState(page);
-  const [industryFilter, setIndustryFilter] = useState(industry);
-  const [paymentFromFilter, setPaymentFromFilter] = useState(payment_from);
-  const [paymentToFilter, setPaymentToFilter] = useState(payment_to);
+  const [searchBarInput, setSearchBarInput] = useState(urlParams.keyword);
+  const [currentPage, setCurrentPage] = useState(urlParams.page);
+  const [industryFilter, setIndustryFilter] = useState(urlParams.industry);
+  const [paymentFromFilter, setPaymentFromFilter] = useState(
+    urlParams.payment_from
+  );
+  const [paymentToFilter, setPaymentToFilter] = useState(urlParams.payment_to);
 
   const MAX_API_ITEMS = 500;
   const itemsPerPage = 4;
