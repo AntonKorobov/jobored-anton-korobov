@@ -5,9 +5,9 @@ import {
   IError,
   IGetVacanciesRequest,
   IGetVacanciesResponse,
+  ISignInData,
 } from "@/types/apiSuperjobTypes";
 import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
-import { IRefreshToken } from "@/hooks/useRefreshToken";
 
 const getVacancies = (apiURL: string, token: string, secretKey: string) =>
   fetch(apiURL, {
@@ -25,7 +25,7 @@ export function useGetVacancies({
   count,
   ids,
 }: IGetVacanciesRequest) {
-  const logInData = { ...(getFromLocalStorage("SignInData") as IRefreshToken) };
+  const logInData = { ...(getFromLocalStorage("SignInData") as ISignInData) };
 
   const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?published=${
     published || ""
