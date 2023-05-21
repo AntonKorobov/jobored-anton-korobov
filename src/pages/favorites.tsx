@@ -9,6 +9,7 @@ import router from "next/router";
 import { VacanciesContainer } from "@/components/Vacancies/VacanciesContainer/VacanciesContainer";
 import { GetServerSideProps } from "next";
 import { Pagination } from "@/components/Pagination/Pagination";
+import { Spinner } from "@/components/Spinner/Spinner";
 
 interface IVacancies {
   page: number;
@@ -34,7 +35,7 @@ export default function Favorites({ page }: IVacancies) {
   const [currentPage, setCurrentPage] = useState(page);
 
   const { favoritesVacanciesIds } = useContext(FavoritesVacanciesContext);
-  const [data, error] = useGetVacancies({
+  const [data, error, isLoading] = useGetVacancies({
     ids: favoritesVacanciesIds,
     published: 1,
     page: currentPage,
@@ -61,6 +62,7 @@ export default function Favorites({ page }: IVacancies) {
   return (
     <Layout>
       <div className={styles.favoritesPage}>
+        {isLoading && <Spinner />}
         {data && <VacanciesContainer data={data} />}
         <Pagination
           onPageChange={handlePageClick}

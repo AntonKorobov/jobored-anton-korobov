@@ -10,6 +10,7 @@ import { useGetVacancies } from "@/hooks/useGetVacancies";
 import { SearchBar } from "@/components/SearchBar/SearchBar";
 import { Filters } from "@/components/Filters/Filters";
 import { Pagination } from "@/components/Pagination/Pagination";
+import { Spinner } from "@/components/Spinner/Spinner";
 
 interface IVacancies {
   keyword: string;
@@ -58,7 +59,7 @@ export default function Vacancies({
   const itemsPerPage = 4;
   const maxPageNumber = MAX_API_ITEMS / itemsPerPage;
 
-  const [data, error] = useGetVacancies({
+  const [data, error, isLoading] = useGetVacancies({
     published: 1,
     keyword: searchBarInput,
     payment_from: paymentFromFilter,
@@ -98,6 +99,7 @@ export default function Vacancies({
           searchBarInput={searchBarInput}
           setSearchBarInput={setSearchBarInput}
         />
+        {isLoading && <Spinner />}
         {data && <VacanciesContainer data={data} />}
         <Pagination
           onPageChange={handlePageClick}

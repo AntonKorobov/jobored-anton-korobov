@@ -37,7 +37,7 @@ export function useGetVacancies({
     ids ? "&ids[]=" + ids.join("&ids[]=") : ""
   }`;
 
-  const { data, error } = useSWR<IGetVacanciesResponse, IError>(
+  const { data, error, isLoading } = useSWR<IGetVacanciesResponse, IError>(
     [url, logInData.token, logInData.client_secret],
     //@ts-ignore
     ([url, token, secretKey]) => getVacancies(url, token, secretKey)
@@ -49,5 +49,5 @@ export function useGetVacancies({
     }
   }, [data]);
 
-  return [data, error] as const;
+  return [data, error, isLoading] as const;
 }
