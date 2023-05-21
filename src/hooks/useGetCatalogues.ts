@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import useSWR from "swr";
 
-import { IError, IGetCataloguesResponse } from "@/types/apiSuperjobTypes";
+import {
+  IError,
+  IGetCataloguesResponse,
+  ISignInData,
+} from "@/types/apiSuperjobTypes";
 import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
-import { IRefreshToken } from "@/hooks/useRefreshToken";
 
 const getCatalogues = (apiURL: string, token: string, secretKey: string) =>
   fetch(apiURL, {
@@ -12,7 +15,7 @@ const getCatalogues = (apiURL: string, token: string, secretKey: string) =>
   }).then((res) => res.json());
 
 export function useGetCatalogues({ id }: { id: number }) {
-  const logInData = { ...(getFromLocalStorage("SignInData") as IRefreshToken) };
+  const logInData = { ...(getFromLocalStorage("SignInData") as ISignInData) };
 
   const url = `https://startup-summer-2023-proxy.onrender.com/2.0/catalogues/parent/${id}`;
 
