@@ -2,9 +2,10 @@ import utilsStyles from "@/styles/utils.module.scss";
 import styles from "./SignIn.module.scss";
 import { clsx } from "clsx";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useSignIn } from "@/hooks/useSignIn";
+import { Spinner } from "@/components/Spinner/Spinner";
 
 export function SignIn() {
   const login = "sergei.stralenia@gmail.com";
@@ -17,7 +18,7 @@ export function SignIn() {
 
   const [isSignInDataReady, setIsSignInDataReady] = useState(false);
 
-  const [data, error] = useSignIn({
+  const [data, error, isLoading] = useSignIn({
     login,
     password,
     client_id,
@@ -29,12 +30,16 @@ export function SignIn() {
 
   return (
     <>
-      <button
-        className={clsx(styles.submitButton, utilsStyles.submitButton)}
-        onClick={() => setIsSignInDataReady(!isSignInDataReady)}
-      >
-        Sign In
-      </button>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <button
+          className={clsx(styles.submitButton, utilsStyles.submitButton)}
+          onClick={() => setIsSignInDataReady(!isSignInDataReady)}
+        >
+          Войти
+        </button>
+      )}
     </>
   );
 }

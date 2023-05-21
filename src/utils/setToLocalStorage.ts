@@ -1,3 +1,5 @@
 export const setToLocalStorage = (categoryName: string, data: string) => {
-  localStorage.setItem(categoryName, data);
+  if (typeof window !== "undefined") {
+    localStorage.setItem(categoryName, data);
+  }
 };

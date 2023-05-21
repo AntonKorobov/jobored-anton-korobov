@@ -2,11 +2,16 @@ import "@/styles/global.scss";
 
 import type { AppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
-import { useRefreshToken } from "@/hooks/useRefreshToken";
 import { FavoritesVacanciesProvider } from "@/store/Provider";
+import { useEffect } from "react";
+import { refreshToken } from "@/utils/refreshToken";
 
 export default function App({ Component, pageProps }: AppProps) {
-  // useRefreshToken();
+  useEffect(() => {
+    (async () => {
+      refreshToken();
+    })();
+  }, []);
 
   return (
     <MantineProvider
