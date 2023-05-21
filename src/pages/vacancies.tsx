@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps<{
 
   const keyword = context.query?.keyword?.toString() || "";
   const page = Number(context.query?.page) - 1 || 0;
-  const industry = Number(context.query?.industry) || 0;
+  const industry = Number(context.query?.industry) || 33;
   const payment_from = Number(context.query?.payment_from) || 0;
   const payment_to = Number(context.query?.payment_to) || 0;
   return {
