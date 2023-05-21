@@ -18,7 +18,7 @@ const getVacancy = (apiURL: string, token: string, secretKey: string) =>
 export function useGetVacancy({ id }: IGetVacancyRequest) {
   const logInData = { ...(getFromLocalStorage("SignInData") as ISignInData) };
 
-  const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/${id}`;
+  const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/${id}/`;
 
   const { data, error } = useSWR<IGetVacancyResponse, IError>(
     [url, logInData.token, logInData.client_secret],
