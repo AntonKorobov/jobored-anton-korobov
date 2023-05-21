@@ -1,7 +1,6 @@
 import styles from "@/styles/pages/Vacancies.module.scss";
 
 import { useState } from "react";
-import ReactPaginate from "react-paginate";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
@@ -10,6 +9,7 @@ import { VacanciesContainer } from "@/components/Vacancies/VacanciesContainer/Va
 import { useGetVacancies } from "@/hooks/useGetVacancies";
 import { SearchBar } from "@/components/SearchBar/SearchBar";
 import { Filters } from "@/components/Filters/Filters";
+import { Pagination } from "@/components/Pagination/Pagination";
 
 interface IVacancies {
   keyword: string;
@@ -99,25 +99,14 @@ export default function Vacancies({
           setSearchBarInput={setSearchBarInput}
         />
         {data && <VacanciesContainer data={data} />}
-        <ReactPaginate
-          containerClassName={styles.paginationContainer}
-          pageClassName={styles.paginationItem}
-          pageLinkClassName={styles.paginationPageLink}
-          previousClassName={styles.paginationButton}
-          nextClassName={styles.paginationButton}
-          activeLinkClassName={styles.paginationActivePageLink}
-          breakLabel="..."
-          nextLabel=">"
+        <Pagination
           onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
           pageCount={
             Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
               ? maxPageNumber
               : Math.ceil((data?.total || 0) / itemsPerPage)
           }
           forcePage={currentPage}
-          previousLabel="<"
-          renderOnZeroPageCount={undefined}
         />
       </div>
     </Layout>

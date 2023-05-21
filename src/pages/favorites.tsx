@@ -7,8 +7,8 @@ import { useGetVacancies } from "@/hooks/useGetVacancies";
 import { FavoritesVacanciesContext } from "@/store/Context";
 import router from "next/router";
 import { VacanciesContainer } from "@/components/Vacancies/VacanciesContainer/VacanciesContainer";
-import ReactPaginate from "react-paginate";
 import { GetServerSideProps } from "next";
+import { Pagination } from "@/components/Pagination/Pagination";
 
 interface IVacancies {
   page: number;
@@ -62,25 +62,14 @@ export default function Favorites({ page }: IVacancies) {
     <Layout>
       <div className={styles.favoritesPage}>
         {data && <VacanciesContainer data={data} />}
-        <ReactPaginate
-          containerClassName={styles.paginationContainer}
-          pageClassName={styles.paginationItem}
-          pageLinkClassName={styles.paginationPageLink}
-          previousClassName={styles.paginationButton}
-          nextClassName={styles.paginationButton}
-          activeLinkClassName={styles.paginationActivePageLink}
-          breakLabel="..."
-          nextLabel=">"
+        <Pagination
           onPageChange={handlePageClick}
-          pageRangeDisplayed={3}
           pageCount={
             Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
               ? maxPageNumber
               : Math.ceil((data?.total || 0) / itemsPerPage)
           }
           forcePage={currentPage}
-          previousLabel="<"
-          renderOnZeroPageCount={undefined}
         />
       </div>
     </Layout>
