@@ -113,16 +113,20 @@ export default function Vacancies({
             <Spinner />
           </div>
         )}
-        {data && <VacanciesContainer data={data} />}
-        <Pagination
-          onPageChange={handlePageClick}
-          pageCount={
-            Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
-              ? maxPageNumber
-              : Math.ceil((data?.total || 0) / itemsPerPage)
-          }
-          forcePage={currentPage}
-        />
+        {data && (
+          <>
+            <VacanciesContainer data={data} />
+            <Pagination
+              onPageChange={handlePageClick}
+              pageCount={
+                Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
+                  ? maxPageNumber
+                  : Math.ceil((data?.total || 0) / itemsPerPage)
+              }
+              forcePage={currentPage}
+            />
+          </>
+        )}
       </div>
     </Layout>
   );
