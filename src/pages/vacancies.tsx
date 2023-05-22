@@ -15,6 +15,7 @@ import { refreshToken } from "@/utils/refreshToken";
 import { ISignInData } from "@/types/apiSuperjobTypes";
 import { getEnvVariables } from "@/utils/getEnvVeriables";
 import { setToLocalStorage } from "@/utils/setToLocalStorage";
+import { EmptyState } from "@/EmptyState/EmptyState";
 
 interface IVacancies {
   keyword: string;
@@ -116,7 +117,10 @@ export default function Vacancies({
               <Spinner />
             </div>
           )}
-          {data && (
+          {data && data?.objects.length === 0 && (
+            <EmptyState isLinkButtonVisible={false} />
+          )}
+          {data && data?.objects.length > 0 && (
             <>
               <VacanciesContainer data={data} />
               <Pagination
