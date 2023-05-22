@@ -32,22 +32,37 @@
     outline: none;
   }
 
-  &:focus-within {
+  &:focus-visible {
     outline: 1px solid var(--link-color);
   }
 }
 
 .paginationActivePageLink {
   background-color: var(--button-color);
+  color: var(--main-color);
   border-radius: 4px;
+
+  &:hover {
+    color: var(--main-color);
+  }
+}
+
+.paginationDisabledPageLink {
+  color: var(--main-text-color);
+
+  &:hover {
+    cursor: default;
+    color: var(--main-text-color);
+  }
 }
 
 .paginationButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 3.2rem;
-  height: 3.2rem;
+  min-width: 3.2rem;
+  max-height: 3.2rem;
+  padding: 0.8rem;
   background-color: var(--main-color);
   border-radius: 4px;
 
@@ -59,7 +74,7 @@
     outline: none;
   }
 
-  &:focus-within {
+  &:focus-visible {
     outline: 1px solid var(--link-color);
   }
 }

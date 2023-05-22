@@ -18,9 +18,10 @@ export function Pagination({
       containerClassName={styles.paginationContainer}
       pageClassName={styles.paginationItem}
       pageLinkClassName={styles.paginationPageLink}
-      previousClassName={styles.paginationButton}
-      nextClassName={styles.paginationButton}
+      previousLinkClassName={styles.paginationButton}
+      nextLinkClassName={styles.paginationButton}
       activeLinkClassName={styles.paginationActivePageLink}
+      disabledLinkClassName={styles.paginationDisabledPageLink}
       breakLabel="..."
       nextLabel=">"
       onPageChange={onPageChange}
