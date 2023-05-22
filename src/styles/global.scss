@@ -1,8 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Open+Sans:wght@600&family=Poppins:wght@400;600&display=swap");
 
 :root {
-  --max-width: 1100px;
+  --max-width: 1116px;
   --header-height: 8.4rem;
   --border-radius: 12px;
 
@@ -10,11 +11,13 @@
   --main-text-color: #000000;
   --second-text-color: #d5d6dc;
   --hint-text-color: #acadb9;
+  --link-text-color: #3b7cd3;
   --background-color: #f5f5f6;
   --link-color: #5e96fc;
   --border-color: #eaebed;
   --border-color-second: #d5d6dc;
   --button-color: #5e96fc;
+  --button-link-color: #deecff;
 }
 
 * {

@@ -32,7 +32,7 @@ export const getServerSideProps: GetServerSideProps<{
 
   const keyword = context.query?.keyword?.toString() || "";
   const page = Number(context.query?.page) - 1 || 0;
-  const industry = Number(context.query?.industry) || 0;
+  const industry = Number(context.query?.industry) || 33;
   const payment_from = Number(context.query?.payment_from) || 0;
   const payment_to = Number(context.query?.payment_to) || 0;
   return {
@@ -98,31 +98,39 @@ export default function Vacancies({
   return (
     <Layout>
       <div className={styles.searchPage}>
-        <Filters
-          setIndustryFilter={setIndustryFilter}
-          setPaymentFromFilter={setPaymentFromFilter}
-          setPaymentToFilter={setPaymentToFilter}
-          setCurrentPage={setCurrentPage}
-        />
-        <SearchBar
-          searchBarInput={searchBarInput}
-          setSearchBarInput={setSearchBarInput}
-        />
-        {isLoading && (
-          <div className={styles.spinnerWrapper}>
-            <Spinner />
-          </div>
-        )}
-        {data && <VacanciesContainer data={data} />}
-        <Pagination
-          onPageChange={handlePageClick}
-          pageCount={
-            Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
-              ? maxPageNumber
-              : Math.ceil((data?.total || 0) / itemsPerPage)
-          }
-          forcePage={currentPage}
-        />
+        <div className={styles.controls}>
+          <Filters
+            setIndustryFilter={setIndustryFilter}
+            setPaymentFromFilter={setPaymentFromFilter}
+            setPaymentToFilter={setPaymentToFilter}
+            setCurrentPage={setCurrentPage}
+          />
+          <SearchBar
+            searchBarInput={searchBarInput}
+            setSearchBarInput={setSearchBarInput}
+          />
+        </div>
+        <div className={styles.results}>
+          {isLoading && (
+            <div className={styles.spinnerWrapper}>
+              <Spinner />
+            </div>
+          )}
+          {data && (
+            <>
+              <VacanciesContainer data={data} />
+              <Pagination
+                onPageChange={handlePageClick}
+                pageCount={
+                  Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
+                    ? maxPageNumber
+                    : Math.ceil((data?.total || 0) / itemsPerPage)
+                }
+                forcePage={currentPage}
+              />
+            </>
+          )}
+        </div>
       </div>
     </Layout>
   );

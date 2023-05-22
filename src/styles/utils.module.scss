@@ -11,3 +11,17 @@
     cursor: pointer;
   }
 }
+
+.linkButton {
+  padding: 0.4rem;
+  font-size: 1.4rem;
+  line-height: 2.1rem;
+  background-color: var(--button-link-color);
+  color: var(--main-color);
+  border: none;
+  border-radius: 8px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

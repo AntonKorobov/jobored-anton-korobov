@@ -14,6 +14,7 @@ import { refreshToken } from "@/utils/refreshToken";
 import { getEnvVariables } from "@/utils/getEnvVeriables";
 import { ISignInData } from "@/types/apiSuperjobTypes";
 import { setToLocalStorage } from "@/utils/setToLocalStorage";
+import { EmptyState } from "@/EmptyState/EmptyState";
 
 interface IVacancies {
   page: number;
@@ -84,16 +85,21 @@ export default function Favorites({
             <Spinner />
           </div>
         )}
-        {data && <VacanciesContainer data={data} />}
-        <Pagination
-          onPageChange={handlePageClick}
-          pageCount={
-            Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
-              ? maxPageNumber
-              : Math.ceil((data?.total || 0) / itemsPerPage)
-          }
-          forcePage={currentPage}
-        />
+        {data && data?.objects.length === 0 && <EmptyState />}
+        {data && data?.objects.length > 0 && (
+          <>
+            <VacanciesContainer data={data} />{" "}
+            <Pagination
+              onPageChange={handlePageClick}
+              pageCount={
+                Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
+                  ? maxPageNumber
+                  : Math.ceil((data?.total || 0) / itemsPerPage)
+              }
+              forcePage={currentPage}
+            />
+          </>
+        )}
       </div>
     </Layout>
   );

@@ -5,16 +5,25 @@ import { useRouter } from "next/router";
 import Layout from "@/components/layout";
 import { useGetVacancy } from "@/hooks/useGetVacancy";
 import { VacancyCard } from "@/components/Vacancies/VacancyCard/VacancyCard";
+import { Spinner } from "@/components/Spinner/Spinner";
 
 export default function Vacancy() {
   const router = useRouter();
-  const [data, error] = useGetVacancy({ id: Number(router.query.id) });
+  const [data, error, isLoading] = useGetVacancy({
+    id: Number(router.query.id),
+  });
 
   return (
     <Layout>
+      {isLoading && (
+        <div className={styles.spinnerWrapperVacancy}>
+          <Spinner />
+        </div>
+      )}
       {data && (
         <div className={styles.vacancyPage}>
           <VacancyCard
+            className="darkVacancyCard"
             key={data.id}
             data={{
               id: data.id,

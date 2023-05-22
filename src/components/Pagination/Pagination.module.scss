@@ -2,11 +2,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
   margin: 2rem 0;
 
   li {
     list-style: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .paginationContainer {
+    gap: 1rem;
   }
 }
 
@@ -20,9 +25,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 3.2rem;
+  font-size: 1.6rem;
+  min-width: 2.2rem;
   max-height: 3.2rem;
-  padding: 0.8rem;
+  padding: 0.8rem 0.4rem;
 
   &:hover {
     cursor: pointer;
@@ -32,22 +38,45 @@
     outline: none;
   }
 
-  &:focus-within {
+  &:focus-visible {
     outline: 1px solid var(--link-color);
+  }
+}
+
+@media (min-width: 640px) {
+  .paginationPageLink {
+    min-width: 3.2rem;
+    max-height: 3.2rem;
+    padding: 0.8rem;
   }
 }
 
 .paginationActivePageLink {
   background-color: var(--button-color);
+  color: var(--main-color);
   border-radius: 4px;
+
+  &:hover {
+    color: var(--main-color);
+  }
+}
+
+.paginationDisabledPageLink {
+  color: var(--main-text-color);
+
+  &:hover {
+    cursor: default;
+    color: var(--main-text-color);
+  }
 }
 
 .paginationButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 3.2rem;
-  height: 3.2rem;
+  min-width: 3.2rem;
+  max-height: 3.2rem;
+  padding: 0.8rem;
   background-color: var(--main-color);
   border-radius: 4px;
 
@@ -59,7 +88,7 @@
     outline: none;
   }
 
-  &:focus-within {
+  &:focus-visible {
     outline: 1px solid var(--link-color);
   }
 }
