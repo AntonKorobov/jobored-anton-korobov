@@ -24,6 +24,7 @@ export function SelectCustom<TFormValues>({
 }: ISelectCustom<TFormValues>) {
   return (
     <Select
+      data-elem="industry-select"
       {...form?.getInputProps(valueName || "")}
       label={label || null}
       placeholder={placeholder || ""}

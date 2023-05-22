@@ -49,12 +49,14 @@ export function VacancyCard({ data, className }: IVacancyCard) {
 
   return (
     <Link
+      data-elem={`vacancy-${data.id}`}
       className={clsx(styles.vacancyCard, className && styles[className])}
       href={`/vacancies/${data.id}`}
     >
       <div className={styles.header}>
         <h3 className={styles.title}>{data.profession}</h3>
         <FavoriteButton
+          dataAttribute={`vacancy-${data.id}-shortlist-button`}
           isActive={favoritesVacanciesIds.indexOf(data.id) !== -1}
           onClick={addToFavoriteHandler}
         />

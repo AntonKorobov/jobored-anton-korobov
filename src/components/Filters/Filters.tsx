@@ -80,6 +80,7 @@ export function Filters({
         <li className={styles.item}>
           <div className={styles.salaryWrapper}>
             <NumberInputCustom
+              dataAttribute="salary-from-input"
               placeholder="От"
               label="Оклад"
               valueName="payment_from"
@@ -87,6 +88,7 @@ export function Filters({
               step={1000}
             />
             <NumberInputCustom
+              dataAttribute="salary-to-input"
               placeholder="До"
               valueName="payment_to"
               form={formFilters}
@@ -96,6 +98,7 @@ export function Filters({
         </li>
       </ul>
       <button
+        data-elem="search-button"
         className={clsx(utils.submitButton, styles.submitButton)}
         type="submit"
       >

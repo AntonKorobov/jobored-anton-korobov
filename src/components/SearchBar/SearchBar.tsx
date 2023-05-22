@@ -46,6 +46,7 @@ export function SearchBar({ searchBarInput, setSearchBarInput }: ISearch) {
         alt="search button"
       />
       <input
+        data-elem="search-input"
         className={styles.input}
         type="search"
         value={searchBarInput}
@@ -54,6 +55,7 @@ export function SearchBar({ searchBarInput, setSearchBarInput }: ISearch) {
         onChange={handleChangeSearchBar}
       />
       <button
+        data-elem="search-button"
         className={clsx(utils.submitButton, styles.submitButton)}
         type="submit"
       >
