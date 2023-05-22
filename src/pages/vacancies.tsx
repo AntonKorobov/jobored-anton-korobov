@@ -105,12 +105,12 @@ export default function Vacancies({
             setPaymentToFilter={setPaymentToFilter}
             setCurrentPage={setCurrentPage}
           />
+        </div>
+        <div className={styles.results}>
           <SearchBar
             searchBarInput={searchBarInput}
             setSearchBarInput={setSearchBarInput}
           />
-        </div>
-        <div className={styles.results}>
           {isLoading && (
             <div className={styles.spinnerWrapper}>
               <Spinner />
