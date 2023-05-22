@@ -27,15 +27,16 @@ export function Filters({
   setPaymentToFilter,
   setCurrentPage,
 }: IFilters) {
+  const INDUSTRY_INDEX = 33;
+
   const formFilters = useForm<IFormData>({
     initialValues: {
-      industry: "",
+      industry: INDUSTRY_INDEX,
       payment_from: "",
       payment_to: "",
     },
   });
 
-  const INDUSTRY_INDEX = 33;
   const [data, error] = useGetCatalogues({ id: INDUSTRY_INDEX });
 
   const onSubmit = formFilters.onSubmit((data) => {
@@ -44,7 +45,7 @@ export function Filters({
     setPaymentFromFilter(data.payment_from ? data.payment_from : 0);
     setPaymentToFilter(data.payment_to ? data.payment_to : 0);
     setCurrentPage(0);
-    setIndustryFilter(data.industry ? data.industry : 0);
+    setIndustryFilter(data.industry ? data.industry : INDUSTRY_INDEX);
   });
 
   const onReset = () => {
