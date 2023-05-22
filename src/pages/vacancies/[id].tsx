@@ -15,6 +15,7 @@ export default function Vacancy() {
       {data && (
         <div className={styles.vacancyPage}>
           <VacancyCard
+            className="darkVacancyCard"
             key={data.id}
             data={{
               id: data.id,

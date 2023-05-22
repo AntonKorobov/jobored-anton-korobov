@@ -25,7 +25,7 @@ export function Pagination({
       breakLabel="..."
       nextLabel=">"
       onPageChange={onPageChange}
-      pageRangeDisplayed={3}
+      pageRangeDisplayed={1}
       pageCount={pageCount}
       forcePage={forcePage}
       previousLabel="<"

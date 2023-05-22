@@ -98,35 +98,39 @@ export default function Vacancies({
   return (
     <Layout>
       <div className={styles.searchPage}>
-        <Filters
-          setIndustryFilter={setIndustryFilter}
-          setPaymentFromFilter={setPaymentFromFilter}
-          setPaymentToFilter={setPaymentToFilter}
-          setCurrentPage={setCurrentPage}
-        />
-        <SearchBar
-          searchBarInput={searchBarInput}
-          setSearchBarInput={setSearchBarInput}
-        />
-        {isLoading && (
-          <div className={styles.spinnerWrapper}>
-            <Spinner />
-          </div>
-        )}
-        {data && (
-          <>
-            <VacanciesContainer data={data} />
-            <Pagination
-              onPageChange={handlePageClick}
-              pageCount={
-                Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
-                  ? maxPageNumber
-                  : Math.ceil((data?.total || 0) / itemsPerPage)
-              }
-              forcePage={currentPage}
-            />
-          </>
-        )}
+        <div className={styles.controls}>
+          <Filters
+            setIndustryFilter={setIndustryFilter}
+            setPaymentFromFilter={setPaymentFromFilter}
+            setPaymentToFilter={setPaymentToFilter}
+            setCurrentPage={setCurrentPage}
+          />
+          <SearchBar
+            searchBarInput={searchBarInput}
+            setSearchBarInput={setSearchBarInput}
+          />
+        </div>
+        <div className={styles.results}>
+          {isLoading && (
+            <div className={styles.spinnerWrapper}>
+              <Spinner />
+            </div>
+          )}
+          {data && (
+            <>
+              <VacanciesContainer data={data} />
+              <Pagination
+                onPageChange={handlePageClick}
+                pageCount={
+                  Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
+                    ? maxPageNumber
+                    : Math.ceil((data?.total || 0) / itemsPerPage)
+                }
+                forcePage={currentPage}
+              />
+            </>
+          )}
+        </div>
       </div>
     </Layout>
   );

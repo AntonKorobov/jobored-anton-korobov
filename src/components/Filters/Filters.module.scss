@@ -6,6 +6,12 @@
   border-radius: var(--border-radius);
 }
 
+@media (min-width: 640px) {
+  .filters {
+    padding: 2.4rem;
+  }
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -14,7 +20,13 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 1.8rem;
+}
+
+@media (min-width: 640px) {
+  .title {
+    font-size: 2rem;
+  }
 }
 
 .resetButton {
@@ -33,12 +45,6 @@
 
 .categories {
   list-style: none;
-}
-
-.categoriesTitle {
-  display: block;
-  font-weight: 700;
-  font-size: 1.6rem;
 }
 
 .item {

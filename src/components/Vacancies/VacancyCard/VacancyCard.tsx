@@ -13,9 +13,10 @@ import { FavoritesVacanciesContext } from "@/store/Context";
 
 interface IVacancyCard {
   data: IGetVacancyResponse;
+  className?: string;
 }
 
-export function VacancyCard({ data }: IVacancyCard) {
+export function VacancyCard({ data, className }: IVacancyCard) {
   function convertPaymentInfo(
     from: number | null,
     to: number | null,
@@ -47,7 +48,10 @@ export function VacancyCard({ data }: IVacancyCard) {
   };
 
   return (
-    <Link className={styles.vacancyCard} href={`/vacancies/${data.id}`}>
+    <Link
+      className={clsx(styles.vacancyCard, className && styles[className])}
+      href={`/vacancies/${data.id}`}
+    >
       <div className={styles.header}>
         <h3 className={styles.title}>{data.profession}</h3>
         <FavoriteButton

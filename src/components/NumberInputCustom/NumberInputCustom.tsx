@@ -39,6 +39,7 @@ export function NumberInputCustom<TFormValues>({
           label={label || null}
           min={0}
           step={step || 1}
+          className={styles.input}
           styles={{
             input: {
               fontSize: "1.4rem",
