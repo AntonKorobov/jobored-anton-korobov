@@ -33,7 +33,7 @@ export function SearchBar({ searchBarInput, setSearchBarInput }: ISearch) {
   };
 
   const searchBarOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    // event.preventDefault();
+    event.preventDefault();
   };
 
   return (
