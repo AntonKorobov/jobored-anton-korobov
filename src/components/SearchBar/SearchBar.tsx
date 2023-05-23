@@ -4,6 +4,7 @@ import clsx from "clsx";
 
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useRef } from "react";
 
 interface ISearch {
   searchBarInput: string;
@@ -11,12 +12,12 @@ interface ISearch {
 }
 
 export function SearchBar({ searchBarInput, setSearchBarInput }: ISearch) {
+  const searchBarRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   const handleChangeSearchBar = (event: {
     target: { name?: string; value: string };
   }) => {
-    setSearchBarInput(event.target.value);
     router.replace(
       {
         pathname: "",
@@ -34,6 +35,7 @@ export function SearchBar({ searchBarInput, setSearchBarInput }: ISearch) {
 
   const searchBarOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (searchBarRef.current) setSearchBarInput(searchBarRef.current.value);
   };
 
   return (
@@ -49,7 +51,8 @@ export function SearchBar({ searchBarInput, setSearchBarInput }: ISearch) {
         data-elem="search-input"
         className={styles.input}
         type="search"
-        value={searchBarInput}
+        defaultValue={searchBarInput}
+        ref={searchBarRef}
         placeholder="Введите название вакансии"
         name="keyword"
         onChange={handleChangeSearchBar}

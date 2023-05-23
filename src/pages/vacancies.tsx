@@ -1,6 +1,6 @@
 import styles from "@/styles/pages/Vacancies.module.scss";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 
@@ -56,6 +56,8 @@ export default function Vacancies({
   }, [envVariables]);
 
   const router = useRouter();
+
+  // const submitRef = useRef<HTMLInputElement>();
 
   const [searchBarInput, setSearchBarInput] = useState(urlParams.keyword);
   const [currentPage, setCurrentPage] = useState(urlParams.page);
