@@ -4,14 +4,21 @@ import clsx from "clsx";
 
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useRef } from "react";
+import { RefObject, useRef } from "react";
 
 interface ISearch {
   searchBarInput: string;
   setSearchBarInput: (value: string) => void;
+  submitFiltersRef?: RefObject<HTMLButtonElement>;
+  submitSearchRef?: RefObject<HTMLButtonElement>;
 }
 
-export function SearchBar({ searchBarInput, setSearchBarInput }: ISearch) {
+export function SearchBar({
+  searchBarInput,
+  setSearchBarInput,
+  submitFiltersRef,
+  submitSearchRef,
+}: ISearch) {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -36,6 +43,8 @@ export function SearchBar({ searchBarInput, setSearchBarInput }: ISearch) {
   const searchBarOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (searchBarRef.current) setSearchBarInput(searchBarRef.current.value);
+    if (submitFiltersRef && submitFiltersRef.current)
+      submitFiltersRef.current.click();
   };
 
   return (
@@ -58,6 +67,7 @@ export function SearchBar({ searchBarInput, setSearchBarInput }: ISearch) {
         onChange={handleChangeSearchBar}
       />
       <button
+        ref={submitSearchRef}
         data-elem="search-button"
         className={clsx(utils.submitButton, styles.submitButton)}
         type="submit"

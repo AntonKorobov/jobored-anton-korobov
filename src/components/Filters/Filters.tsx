@@ -7,12 +7,15 @@ import { useForm } from "@mantine/form";
 import { useGetCatalogues } from "@/hooks/useGetCatalogues";
 import { NumberInputCustom } from "@/components/NumberInputCustom/NumberInputCustom";
 import { SelectCustom } from "../SelectCustom/SelectCustom";
+import { RefObject } from "react";
 
 interface IFilters {
   setIndustryFilter: (value: number) => void;
   setPaymentFromFilter: (value: number) => void;
   setPaymentToFilter: (value: number) => void;
   setCurrentPage: (value: number) => void;
+  submitFiltersRef?: RefObject<HTMLButtonElement>;
+  submitSearchRef?: RefObject<HTMLButtonElement>;
 }
 
 interface IFormData {
@@ -26,6 +29,8 @@ export function Filters({
   setPaymentFromFilter,
   setPaymentToFilter,
   setCurrentPage,
+  submitFiltersRef,
+  submitSearchRef,
 }: IFilters) {
   const INDUSTRY_INDEX = 33;
 
@@ -46,6 +51,9 @@ export function Filters({
     setPaymentToFilter(data.payment_to ? data.payment_to : 0);
     setCurrentPage(0);
     setIndustryFilter(data.industry ? data.industry : INDUSTRY_INDEX);
+
+    if (submitSearchRef && submitSearchRef.current)
+      submitSearchRef.current.click();
   });
 
   const onReset = () => {
@@ -99,6 +107,7 @@ export function Filters({
         </li>
       </ul>
       <button
+        ref={submitFiltersRef}
         data-elem="search-button"
         className={clsx(utils.submitButton, styles.submitButton)}
         type="submit"

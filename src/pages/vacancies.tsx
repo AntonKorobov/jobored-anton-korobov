@@ -57,8 +57,6 @@ export default function Vacancies({
 
   const router = useRouter();
 
-  // const submitRef = useRef<HTMLInputElement>();
-
   const [searchBarInput, setSearchBarInput] = useState(urlParams.keyword);
   const [currentPage, setCurrentPage] = useState(urlParams.page);
   const [industryFilter, setIndustryFilter] = useState(urlParams.industry);
@@ -66,6 +64,9 @@ export default function Vacancies({
     urlParams.payment_from
   );
   const [paymentToFilter, setPaymentToFilter] = useState(urlParams.payment_to);
+
+  const submitFiltersRef = useRef<HTMLButtonElement>(null);
+  const submitSearchRef = useRef<HTMLButtonElement>(null);
 
   const MAX_API_ITEMS = 500;
   const itemsPerPage = 4;
@@ -103,6 +104,8 @@ export default function Vacancies({
       <div className={styles.searchPage}>
         <div className={styles.controls}>
           <Filters
+            submitFiltersRef={submitFiltersRef}
+            submitSearchRef={submitSearchRef}
             setIndustryFilter={setIndustryFilter}
             setPaymentFromFilter={setPaymentFromFilter}
             setPaymentToFilter={setPaymentToFilter}
@@ -111,6 +114,8 @@ export default function Vacancies({
         </div>
         <div className={styles.results}>
           <SearchBar
+            submitFiltersRef={submitFiltersRef}
+            submitSearchRef={submitSearchRef}
             searchBarInput={searchBarInput}
             setSearchBarInput={setSearchBarInput}
           />
