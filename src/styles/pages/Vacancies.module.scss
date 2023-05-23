@@ -7,6 +7,11 @@
   .searchPage {
     display: flex;
   }
+
+  .searchPage,
+  .vacancyPage {
+    margin-top: 4rem;
+  }
 }
 
 .section {

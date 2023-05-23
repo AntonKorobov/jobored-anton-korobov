@@ -1,6 +1,6 @@
 import styles from "@/styles/pages/Vacancies.module.scss";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 
@@ -15,6 +15,7 @@ import { refreshToken } from "@/utils/refreshToken";
 import { ISignInData } from "@/types/apiSuperjobTypes";
 import { getEnvVariables } from "@/utils/getEnvVeriables";
 import { setToLocalStorage } from "@/utils/setToLocalStorage";
+import { EmptyState } from "@/EmptyState/EmptyState";
 
 interface IVacancies {
   keyword: string;
@@ -64,6 +65,9 @@ export default function Vacancies({
   );
   const [paymentToFilter, setPaymentToFilter] = useState(urlParams.payment_to);
 
+  const submitFiltersRef = useRef<HTMLButtonElement>(null);
+  const submitSearchRef = useRef<HTMLButtonElement>(null);
+
   const MAX_API_ITEMS = 500;
   const itemsPerPage = 4;
   const maxPageNumber = MAX_API_ITEMS / itemsPerPage;
@@ -100,23 +104,30 @@ export default function Vacancies({
       <div className={styles.searchPage}>
         <div className={styles.controls}>
           <Filters
+            submitFiltersRef={submitFiltersRef}
+            submitSearchRef={submitSearchRef}
             setIndustryFilter={setIndustryFilter}
             setPaymentFromFilter={setPaymentFromFilter}
             setPaymentToFilter={setPaymentToFilter}
             setCurrentPage={setCurrentPage}
           />
+        </div>
+        <div className={styles.results}>
           <SearchBar
+            submitFiltersRef={submitFiltersRef}
+            submitSearchRef={submitSearchRef}
             searchBarInput={searchBarInput}
             setSearchBarInput={setSearchBarInput}
           />
-        </div>
-        <div className={styles.results}>
           {isLoading && (
             <div className={styles.spinnerWrapper}>
               <Spinner />
             </div>
           )}
-          {data && (
+          {data && data?.objects.length === 0 && (
+            <EmptyState isLinkButtonVisible={false} />
+          )}
+          {data && data?.objects.length > 0 && (
             <>
               <VacanciesContainer data={data} />
               <Pagination

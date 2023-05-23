@@ -5,14 +5,17 @@ import { clsx } from "clsx";
 interface IFavoriteButton {
   isActive?: boolean;
   onClick: () => void;
+  dataAttribute?: string;
 }
 
 export default function FavoriteButton({
   isActive = false,
   onClick,
+  dataAttribute,
 }: IFavoriteButton) {
   return (
     <button
+      data-elem={dataAttribute}
       className={clsx(styles.favoriteButton, isActive ? styles.active : "")}
       onClick={(event) => {
         event.preventDefault();

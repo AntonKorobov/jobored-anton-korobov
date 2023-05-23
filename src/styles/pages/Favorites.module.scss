@@ -2,6 +2,12 @@
   margin-top: 1.6rem;
 }
 
+@media (min-width: 720px) {
+  .favoritesPage {
+    margin-top: 4rem;
+  }
+}
+
 .spinnerWrapper {
   display: flex;
   align-items: center;

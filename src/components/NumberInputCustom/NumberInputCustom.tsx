@@ -17,6 +17,7 @@ interface INumberInputCustom<TFormValues> {
   form?: UseFormReturnType<TFormValues>;
   valueName?: string;
   step?: number;
+  dataAttribute?: string;
 }
 
 export function NumberInputCustom<TFormValues>({
@@ -25,6 +26,7 @@ export function NumberInputCustom<TFormValues>({
   form,
   valueName,
   step,
+  dataAttribute,
 }: INumberInputCustom<TFormValues>) {
   const handlers = useRef<NumberInputHandlers>();
 
@@ -32,6 +34,7 @@ export function NumberInputCustom<TFormValues>({
     <Group>
       <div className={styles.wrapper}>
         <NumberInput
+          data-elem={dataAttribute}
           {...form?.getInputProps(valueName || "")}
           hideControls
           handlersRef={handlers}

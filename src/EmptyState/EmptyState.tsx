@@ -5,7 +5,11 @@ import clsx from "clsx";
 import Link from "next/link";
 import Image from "next/image";
 
-export function EmptyState() {
+interface EmptyState {
+  isLinkButtonVisible?: boolean;
+}
+
+export function EmptyState({ isLinkButtonVisible = true }: EmptyState) {
   return (
     <div className={styles.emptyStateWrapper}>
       <Image
@@ -15,11 +19,13 @@ export function EmptyState() {
         alt=""
       />
       <p className={styles.message}>Упс, здесь еще ничего нет!</p>
-      <button className={clsx(utils.linkButton, styles.goToPageButton)}>
-        <Link href="/vacancies" className={styles.link}>
-          Поиск вакансиий
-        </Link>
-      </button>
+      {isLinkButtonVisible && (
+        <button className={clsx(utils.linkButton, styles.goToPageButton)}>
+          <Link href="/vacancies" className={styles.link}>
+            Поиск вакансиий
+          </Link>
+        </button>
+      )}
     </div>
   );
 }

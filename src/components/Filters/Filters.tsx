@@ -7,12 +7,15 @@ import { useForm } from "@mantine/form";
 import { useGetCatalogues } from "@/hooks/useGetCatalogues";
 import { NumberInputCustom } from "@/components/NumberInputCustom/NumberInputCustom";
 import { SelectCustom } from "../SelectCustom/SelectCustom";
+import { RefObject } from "react";
 
 interface IFilters {
   setIndustryFilter: (value: number) => void;
   setPaymentFromFilter: (value: number) => void;
   setPaymentToFilter: (value: number) => void;
   setCurrentPage: (value: number) => void;
+  submitFiltersRef?: RefObject<HTMLButtonElement>;
+  submitSearchRef?: RefObject<HTMLButtonElement>;
 }
 
 interface IFormData {
@@ -26,16 +29,19 @@ export function Filters({
   setPaymentFromFilter,
   setPaymentToFilter,
   setCurrentPage,
+  submitFiltersRef,
+  submitSearchRef,
 }: IFilters) {
+  const INDUSTRY_INDEX = 33;
+
   const formFilters = useForm<IFormData>({
     initialValues: {
-      industry: "",
+      industry: INDUSTRY_INDEX,
       payment_from: "",
       payment_to: "",
     },
   });
 
-  const INDUSTRY_INDEX = 33;
   const [data, error] = useGetCatalogues({ id: INDUSTRY_INDEX });
 
   const onSubmit = formFilters.onSubmit((data) => {
@@ -44,7 +50,10 @@ export function Filters({
     setPaymentFromFilter(data.payment_from ? data.payment_from : 0);
     setPaymentToFilter(data.payment_to ? data.payment_to : 0);
     setCurrentPage(0);
-    setIndustryFilter(data.industry ? data.industry : 0);
+    setIndustryFilter(data.industry ? data.industry : INDUSTRY_INDEX);
+
+    if (submitSearchRef && submitSearchRef.current)
+      submitSearchRef.current.click();
   });
 
   const onReset = () => {
@@ -80,6 +89,7 @@ export function Filters({
         <li className={styles.item}>
           <div className={styles.salaryWrapper}>
             <NumberInputCustom
+              dataAttribute="salary-from-input"
               placeholder="От"
               label="Оклад"
               valueName="payment_from"
@@ -87,6 +97,7 @@ export function Filters({
               step={1000}
             />
             <NumberInputCustom
+              dataAttribute="salary-to-input"
               placeholder="До"
               valueName="payment_to"
               form={formFilters}
@@ -96,6 +107,8 @@ export function Filters({
         </li>
       </ul>
       <button
+        ref={submitFiltersRef}
+        data-elem="search-button"
         className={clsx(utils.submitButton, styles.submitButton)}
         type="submit"
       >
