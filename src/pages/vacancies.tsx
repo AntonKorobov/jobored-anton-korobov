@@ -1,6 +1,6 @@
 import styles from "@/styles/pages/Vacancies.module.scss";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { useRouter } from "next/router";
 
@@ -11,10 +11,6 @@ import { SearchBar } from "@/components/SearchBar/SearchBar";
 import { Filters } from "@/components/Filters/Filters";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { Spinner } from "@/components/Spinner/Spinner";
-import { refreshToken } from "@/utils/refreshToken";
-import { ISignInData } from "@/types/apiSuperjobTypes";
-import { getEnvVariables } from "@/utils/getEnvVeriables";
-import { setToLocalStorage } from "@/utils/setToLocalStorage";
 import { EmptyState } from "@/components/EmptyState/EmptyState";
 
 interface IVacancies {
@@ -26,10 +22,8 @@ interface IVacancies {
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  envVariables: ISignInData;
   urlParams: IVacancies;
 }> = async (context) => {
-  const envVariables = getEnvVariables();
 
   const keyword = context.query?.keyword?.toString() || "";
   const page = Number(context.query?.page) - 1 || 0;
@@ -38,22 +32,14 @@ export const getServerSideProps: GetServerSideProps<{
   const payment_to = Number(context.query?.payment_to) || 0;
   return {
     props: {
-      envVariables,
       urlParams: { keyword, page, industry, payment_from, payment_to },
     },
   };
 };
 
 export default function Vacancies({
-  envVariables,
   urlParams,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  useEffect(() => {
-    setToLocalStorage("SignInData", JSON.stringify(envVariables));
-    (async () => {
-      refreshToken();
-    })();
-  }, [envVariables]);
 
   const router = useRouter();
 

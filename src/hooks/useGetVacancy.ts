@@ -5,25 +5,18 @@ import {
   IError,
   IGetVacancyRequest,
   IGetVacancyResponse,
-  ISignInData,
 } from "@/types/apiSuperjobTypes";
-import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
 
-const getVacancy = (apiURL: string, token: string, secretKey: string) =>
+const getVacancy = (apiURL: string) =>
   fetch(apiURL, {
     method: "GET",
-    headers: { "x-secret-key": token, "X-Api-App-Id": secretKey },
   }).then((res) => res.json());
 
 export function useGetVacancy({ id }: IGetVacancyRequest) {
-  const logInData = { ...(getFromLocalStorage("SignInData") as ISignInData) };
-
-  const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/${id}/`;
+  const url = `/api/vacancies/${id}/`;
 
   const { data, error, isLoading } = useSWR<IGetVacancyResponse, IError>(
-    [url, logInData.token, logInData.client_secret],
-    //@ts-ignore
-    ([url, token, secretKey]) => getVacancy(url, token, secretKey)
+    url, (url) => getVacancy(url)
   );
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import styles from "@/styles/pages/Favorites.module.scss";
 
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import router from "next/router";
 
@@ -10,10 +10,7 @@ import { FavoritesVacanciesContext } from "@/store/Context";
 import { VacanciesContainer } from "@/components/Vacancies/VacanciesContainer/VacanciesContainer";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { Spinner } from "@/components/Spinner/Spinner";
-import { refreshToken } from "@/utils/refreshToken";
 import { getEnvVariables } from "@/utils/getEnvVeriables";
-import { ISignInData } from "@/types/apiSuperjobTypes";
-import { setToLocalStorage } from "@/utils/setToLocalStorage";
 import { EmptyState } from "@/components/EmptyState/EmptyState";
 
 interface IVacancies {
@@ -21,7 +18,6 @@ interface IVacancies {
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  envVariables: ISignInData;
   urlParams: IVacancies;
 }> = async (context) => {
   const envVariables = getEnvVariables();
@@ -29,22 +25,14 @@ export const getServerSideProps: GetServerSideProps<{
   const page = Number(context.query?.page) - 1 || 0;
   return {
     props: {
-      envVariables,
       urlParams: { page },
     },
   };
 };
 
 export default function Favorites({
-  envVariables,
   urlParams,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  useEffect(() => {
-    setToLocalStorage("SignInData", JSON.stringify(envVariables));
-    (async () => {
-      refreshToken();
-    })();
-  }, [envVariables]);
 
   const MAX_API_ITEMS = 500;
   const itemsPerPage = 4;
