@@ -45,7 +45,7 @@ export default function Vacancies({
 
   const [searchBarInput, setSearchBarInput] = useState(urlParams.keyword);
   const [currentPage, setCurrentPage] = useState(urlParams.page);
-  const [industryFilter, setIndustryFilter] = useState(urlParams.industry);
+  const [industryFilter, setIndustryFilter] = useState(44);
   const [paymentFromFilter, setPaymentFromFilter] = useState(
     urlParams.payment_from
   );

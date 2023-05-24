@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { IError, IGetVacanciesResponse } from '@/types/apiSuperjobTypes';
+import qs from 'qs';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<IGetVacanciesResponse | IError>) {
     if (req.method === 'GET') {
@@ -9,7 +10,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             const token = process.env.TOKEN || "";
             
             const query = req.query;
-            const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?${query}`
+            const queryParams = qs.stringify(query, { encode: false, encodeValuesOnly: true, arrayFormat: 'brackets', })
+            console.log(query);
+            console.log(queryParams);
+            
+            const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?${queryParams}`
 
             const data: IGetVacanciesResponse = await fetch(url, {
                 method: "GET",

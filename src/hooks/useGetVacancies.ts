@@ -29,8 +29,7 @@ export function useGetVacancies({
   }${payment_to ? "&payment_to=" + payment_to : ""}${
     catalogues ? "&catalogues=" + catalogues : ""
   }&page=${page || 0}${count ? "&count=" + count : ""}${
-    ids ? "&ids[]=" + ids.join("&ids[]=") : ""
-  }`;
+    ids ? "&ids=" + ids.join("&ids=") : ""}`;
 
   const { data, error, isLoading } = useSWR<IGetVacanciesResponse, IError>(
     url, (url) => getVacancies(url)
