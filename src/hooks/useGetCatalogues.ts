@@ -18,11 +18,5 @@ export function useGetCatalogues({ id }: { id: number }) {
     url, (url) => getCatalogues(url)
   );
 
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
-
   return [data, error] as const;
 }

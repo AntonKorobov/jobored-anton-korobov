@@ -35,11 +35,5 @@ export function useGetVacancies({
     url, (url) => getVacancies(url)
   );
 
-  useEffect(() => {
-    if (data) {
-      console.log('responce', data);
-    }
-  }, [data]);
-
   return [data, error, isLoading] as const;
 }

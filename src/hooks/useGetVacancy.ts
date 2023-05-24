@@ -19,11 +19,5 @@ export function useGetVacancy({ id }: IGetVacancyRequest) {
     url, (url) => getVacancy(url)
   );
 
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
-
   return [data, error, isLoading] as const;
 }
