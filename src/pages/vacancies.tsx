@@ -15,7 +15,7 @@ import { refreshToken } from "@/utils/refreshToken";
 import { ISignInData } from "@/types/apiSuperjobTypes";
 import { getEnvVariables } from "@/utils/getEnvVeriables";
 import { setToLocalStorage } from "@/utils/setToLocalStorage";
-import { EmptyState } from "@/EmptyState/EmptyState";
+import { EmptyState } from "@/components/EmptyState/EmptyState";
 
 interface IVacancies {
   keyword: string;
