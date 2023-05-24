@@ -22,7 +22,7 @@ export function useGetVacancies({
   count,
   ids,
 }: IGetVacanciesRequest) {
-  const url = `/api/vacancies/?published=${
+  const url = `/api/vacancies?published=${
     published || ""
   }${keyword ? "&keyword=" + keyword : ""}${
     payment_from ? "&payment_from=" + payment_from : ""
