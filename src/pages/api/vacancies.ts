@@ -12,23 +12,19 @@ export default async function handler(
       const client_secret = process.env.CLIENT_SECRET || "";
       const token = process.env.TOKEN || "";
 
-      console.log("queryBasic: ", req.query);
       const arrayOfIds = req.query.ids
         ? req.query.ids.toString().split(",")
         : "";
+
       req.query.ids = arrayOfIds;
-      console.log("queryChanged: ", req.query);
+      console.log("queryObject: ", req.query);
 
       const queryParams = qs.stringify(req.query, {
         encodeValuesOnly: true,
         arrayFormat: "brackets",
       });
-      // const queryParams = req.url ? req.url.split("?")[1] : "";
-      // const decodedQueryParams = decodeURI(queryParams);
-
       const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies?${queryParams}`;
       console.log("queryParams", queryParams);
-      // console.log("decodedQueryParams---", decodedQueryParams);
       console.log("url: ", url);
 
       const data: IGetVacanciesResponse = await fetch(url, {

@@ -1,6 +1,6 @@
 import styles from "@/styles/pages/Favorites.module.scss";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import router from "next/router";
 
@@ -12,6 +12,7 @@ import { Pagination } from "@/components/Pagination/Pagination";
 import { Spinner } from "@/components/Spinner/Spinner";
 import { getEnvVariables } from "@/utils/getEnvVeriables";
 import { EmptyState } from "@/components/EmptyState/EmptyState";
+import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
 
 interface IVacancies {
   page: number;
@@ -33,7 +34,6 @@ export const getServerSideProps: GetServerSideProps<{
 export default function Favorites({
   urlParams,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-
   const MAX_API_ITEMS = 500;
   const itemsPerPage = 4;
   const maxPageNumber = MAX_API_ITEMS / itemsPerPage;
@@ -47,6 +47,7 @@ export default function Favorites({
     page: currentPage,
     count: itemsPerPage,
   });
+  const [isFavoritesEmpty, setIsFavoritesEmpty] = useState(true);
 
   const handlePageClick = (event: { selected: number }) => {
     setCurrentPage(event.selected);
@@ -65,28 +66,36 @@ export default function Favorites({
     );
   };
 
+  useEffect(() => {
+    setIsFavoritesEmpty(!getFromLocalStorage("favoritesVacanciesIds").length);
+  }, [data]);
+
   return (
     <Layout>
       <div className={styles.favoritesPage}>
-        {isLoading && (
+        {!isFavoritesEmpty && isLoading && (
           <div className={styles.spinnerWrapper}>
             <Spinner />
           </div>
         )}
-        {data && data?.objects.length === 0 && <EmptyState />}
-        {data && data?.objects.length > 0 && (
-          <>
-            <VacanciesContainer data={data} />{" "}
-            <Pagination
-              onPageChange={handlePageClick}
-              pageCount={
-                Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
-                  ? maxPageNumber
-                  : Math.ceil((data?.total || 0) / itemsPerPage)
-              }
-              forcePage={currentPage}
-            />
-          </>
+        {isFavoritesEmpty ? (
+          <EmptyState />
+        ) : (
+          data &&
+          data?.objects.length > 0 && (
+            <>
+              <VacanciesContainer data={data} />{" "}
+              <Pagination
+                onPageChange={handlePageClick}
+                pageCount={
+                  Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
+                    ? maxPageNumber
+                    : Math.ceil((data?.total || 0) / itemsPerPage)
+                }
+                forcePage={currentPage}
+              />
+            </>
+          )
         )}
       </div>
     </Layout>
