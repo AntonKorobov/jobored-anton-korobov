@@ -12,9 +12,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             const query = req.query;
             const queryParams = qs.stringify(query, { encodeValuesOnly: true, arrayFormat: 'brackets', })
             const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies?${queryParams}`
+            console.log(query);
             console.log(queryParams);
             
-
             const data: IGetVacanciesResponse = await fetch(url, {
                 method: "GET",
                 headers: { "x-secret-key": token, "X-Api-App-Id": client_secret },

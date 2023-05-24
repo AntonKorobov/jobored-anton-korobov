@@ -44,7 +44,6 @@ export function VacancyCard({ data, className }: IVacancyCard) {
       JSON.stringify(favoritesVacanciesIds.flat())
     );
     setFavoritesVacanciesIds(favoritesVacanciesIds);
-    console.log(localStorage.favoritesVacanciesIds);
   };
 
   return (
