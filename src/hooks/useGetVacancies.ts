@@ -22,17 +22,17 @@ export function useGetVacancies({
   count,
   ids,
 }: IGetVacanciesRequest) {
-  const url = `/api/vacancies?published=${
-    published || ""
-  }${keyword ? "&keyword=" + keyword : ""}${
-    payment_from ? "&payment_from=" + payment_from : ""
-  }${payment_to ? "&payment_to=" + payment_to : ""}${
-    catalogues ? "&catalogues=" + catalogues : ""
-  }&page=${page || 0}${count ? "&count=" + count : ""}${
-    ids ? "&ids=" + ids.join("&ids=") : ""}`;
+  const url = `/api/vacancies?published=${published || ""}${
+    keyword ? "&keyword=" + keyword : ""
+  }${payment_from ? "&payment_from=" + payment_from : ""}${
+    payment_to ? "&payment_to=" + payment_to : ""
+  }${catalogues ? "&catalogues=" + catalogues : ""}&page=${page || 0}${
+    count ? "&count=" + count : ""
+  }&ids=${ids ? "&ids=" + ids.join("&ids=") : ""}`;
 
   const { data, error, isLoading } = useSWR<IGetVacanciesResponse, IError>(
-    url, (url) => getVacancies(url)
+    url,
+    (url) => getVacancies(url)
   );
 
   return [data, error, isLoading] as const;
