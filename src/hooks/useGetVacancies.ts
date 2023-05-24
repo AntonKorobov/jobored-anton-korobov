@@ -1,18 +1,14 @@
-import { useEffect } from "react";
 import useSWR from "swr";
 
 import {
   IError,
   IGetVacanciesRequest,
   IGetVacanciesResponse,
-  ISignInData,
 } from "@/types/apiSuperjobTypes";
-import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
 
-const getVacancies = (apiURL: string, token: string, secretKey: string) =>
+const getVacancies = (apiURL: string) =>
   fetch(apiURL, {
     method: "GET",
-    headers: { "x-secret-key": token, "X-Api-App-Id": secretKey },
   }).then((res) => res.json());
 
 export function useGetVacancies({
@@ -25,29 +21,18 @@ export function useGetVacancies({
   count,
   ids,
 }: IGetVacanciesRequest) {
-  const logInData = { ...(getFromLocalStorage("SignInData") as ISignInData) };
-
-  const url = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?published=${
-    published || ""
-  }${keyword ? "&keyword=" + keyword : ""}${
-    payment_from ? "&payment_from=" + payment_from : ""
-  }${payment_to ? "&payment_to=" + payment_to : ""}${
-    catalogues ? "&catalogues=" + catalogues : ""
-  }&page=${page || 0}${count ? "&count=" + count : ""}${
-    ids ? "&ids[]=" + ids.join("&ids[]=") : ""
-  }`;
+  const url = `/api/vacancies?published=${published || ""}${
+    keyword ? "&keyword=" + keyword : ""
+  }${payment_from ? "&payment_from=" + payment_from : ""}${
+    payment_to ? "&payment_to=" + payment_to : ""
+  }${catalogues ? "&catalogues=" + catalogues : ""}&page=${page || 0}${
+    count ? "&count=" + count : ""
+  }${ids?.length ? "&ids=" + ids : ""}`;
 
   const { data, error, isLoading } = useSWR<IGetVacanciesResponse, IError>(
-    [url, logInData.token, logInData.client_secret],
-    //@ts-ignore
-    ([url, token, secretKey]) => getVacancies(url, token, secretKey)
+    url,
+    (url) => getVacancies(url)
   );
-
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
 
   return [data, error, isLoading] as const;
 }

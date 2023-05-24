@@ -45,8 +45,6 @@ export function Filters({
   const [data, error] = useGetCatalogues({ id: INDUSTRY_INDEX });
 
   const onSubmit = formFilters.onSubmit((data) => {
-    console.log(data);
-
     setPaymentFromFilter(data.payment_from ? data.payment_from : 0);
     setPaymentToFilter(data.payment_to ? data.payment_to : 0);
     setCurrentPage(0);

@@ -10,18 +10,15 @@ import { FavoritesVacanciesContext } from "@/store/Context";
 import { VacanciesContainer } from "@/components/Vacancies/VacanciesContainer/VacanciesContainer";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { Spinner } from "@/components/Spinner/Spinner";
-import { refreshToken } from "@/utils/refreshToken";
 import { getEnvVariables } from "@/utils/getEnvVeriables";
-import { ISignInData } from "@/types/apiSuperjobTypes";
-import { setToLocalStorage } from "@/utils/setToLocalStorage";
-import { EmptyState } from "@/EmptyState/EmptyState";
+import { EmptyState } from "@/components/EmptyState/EmptyState";
+import { getFromLocalStorage } from "@/utils/getFromLocalStorage";
 
 interface IVacancies {
   page: number;
 }
 
 export const getServerSideProps: GetServerSideProps<{
-  envVariables: ISignInData;
   urlParams: IVacancies;
 }> = async (context) => {
   const envVariables = getEnvVariables();
@@ -29,23 +26,14 @@ export const getServerSideProps: GetServerSideProps<{
   const page = Number(context.query?.page) - 1 || 0;
   return {
     props: {
-      envVariables,
       urlParams: { page },
     },
   };
 };
 
 export default function Favorites({
-  envVariables,
   urlParams,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  useEffect(() => {
-    setToLocalStorage("SignInData", JSON.stringify(envVariables));
-    (async () => {
-      refreshToken();
-    })();
-  }, [envVariables]);
-
   const MAX_API_ITEMS = 500;
   const itemsPerPage = 4;
   const maxPageNumber = MAX_API_ITEMS / itemsPerPage;
@@ -59,6 +47,7 @@ export default function Favorites({
     page: currentPage,
     count: itemsPerPage,
   });
+  const [isFavoritesEmpty, setIsFavoritesEmpty] = useState(true);
 
   const handlePageClick = (event: { selected: number }) => {
     setCurrentPage(event.selected);
@@ -77,28 +66,36 @@ export default function Favorites({
     );
   };
 
+  useEffect(() => {
+    setIsFavoritesEmpty(!getFromLocalStorage("favoritesVacanciesIds").length);
+  }, [data]);
+
   return (
     <Layout>
       <div className={styles.favoritesPage}>
-        {isLoading && (
+        {!isFavoritesEmpty && isLoading && (
           <div className={styles.spinnerWrapper}>
             <Spinner />
           </div>
         )}
-        {data && data?.objects.length === 0 && <EmptyState />}
-        {data && data?.objects.length > 0 && (
-          <>
-            <VacanciesContainer data={data} />{" "}
-            <Pagination
-              onPageChange={handlePageClick}
-              pageCount={
-                Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
-                  ? maxPageNumber
-                  : Math.ceil((data?.total || 0) / itemsPerPage)
-              }
-              forcePage={currentPage}
-            />
-          </>
+        {isFavoritesEmpty ? (
+          <EmptyState />
+        ) : (
+          data &&
+          data?.objects.length > 0 && (
+            <>
+              <VacanciesContainer data={data} />{" "}
+              <Pagination
+                onPageChange={handlePageClick}
+                pageCount={
+                  Math.ceil((data?.total || 0) / itemsPerPage) > maxPageNumber
+                    ? maxPageNumber
+                    : Math.ceil((data?.total || 0) / itemsPerPage)
+                }
+                forcePage={currentPage}
+              />
+            </>
+          )
         )}
       </div>
     </Layout>
