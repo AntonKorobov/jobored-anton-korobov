@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import useSWR from "swr";
 
 import {
@@ -12,7 +11,7 @@ const getCatalogues = (apiURL: string) =>
   }).then((res) => res.json());
 
 export function useGetCatalogues({ id }: { id: number }) {
-  const url = `/api/catalogues/${id}/`;
+  const url = `/api/catalogues/${id}`;
 
   const { data, error } = useSWR<IGetCataloguesResponse[], IError>(
     url, (url) => getCatalogues(url)

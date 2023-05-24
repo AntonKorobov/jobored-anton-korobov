@@ -13,7 +13,7 @@ const getVacancy = (apiURL: string) =>
   }).then((res) => res.json());
 
 export function useGetVacancy({ id }: IGetVacancyRequest) {
-  const url = `/api/vacancies/${id}/`;
+  const url = `/api/vacancies/${id}`;
 
   const { data, error, isLoading } = useSWR<IGetVacancyResponse, IError>(
     url, (url) => getVacancy(url)
