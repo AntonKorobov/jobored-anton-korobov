@@ -48,6 +48,11 @@ export default function Favorites({
     count: itemsPerPage,
   });
   const [isFavoritesEmpty, setIsFavoritesEmpty] = useState(true);
+  useEffect(() => {
+    setIsFavoritesEmpty(!getFromLocalStorage("favoritesVacanciesIds").length);
+    if (!data?.objects.length && currentPage !== 0)
+      setCurrentPage(currentPage - 1);
+  }, [data]);
 
   const handlePageClick = (event: { selected: number }) => {
     setCurrentPage(event.selected);
@@ -65,10 +70,6 @@ export default function Favorites({
       }
     );
   };
-
-  useEffect(() => {
-    setIsFavoritesEmpty(!getFromLocalStorage("favoritesVacanciesIds").length);
-  }, [data]);
 
   return (
     <Layout>
